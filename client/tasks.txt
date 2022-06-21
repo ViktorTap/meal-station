@@ -1,0 +1,31 @@
+1. Front page (waterfall)
+    - header (logo, search, sign in, sign up, profile)
+    - slideshow ??? 
+    - Category
+    - fast money - fast food (< 10€) ???
+    - Restaurants
+
+2. Registration page USER
+    - { 1.accountname-req, 2.firstname-req, 3.lastname-req, 4.address-req, 5.phone numb-optional, 6.password, 7.conf.password }
+    - or maybe you're a restaurant owner?
+
+3. Registration page OWNER
+    - { 1.accountname-req, 2.firstname-req, 3.lastname-req, 4.address-req, 5.phone numb-optional, 6.password, 7.conf.password }
+
+4. USER PAGE 
+    - nav bar { personal info(all registery information), Order History:id?}
+    - Order again ??? last 3 orders
+    - logout
+
+5. OWNER PAGE
+    - nav bar { personal info(all registery information), Order History:id?, Restaurants:id?}
+    - logout
+
+5.2. OWNER PAGE -> RESTAURANTS PAGE
+    - Add restaurant { name, description, address, category(3), price, open-hours? } *also CRUD operations
+        - IN restaurant ( create, read(get), update, delete - meal?)
+
+6. Restaurant PAGE
+    - Cover name + description
+    - food / meals (name, price, picture)
+        - press food / meal = zoom in add order - 1 + (min 1 , max 10);

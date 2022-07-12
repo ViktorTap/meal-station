@@ -1,10 +1,68 @@
 import "./App.css";
+// STUFF
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+
+// COMPONENTS MAIN
+import Layout from "./components/main/Layout";
+import Header from "./components/main/Header";
+import Category from "./components/main/Category";
+import Restaurants from "./components/main/Restaurants";
+import Footer from "./components/main/Footer";
+import Login from "./components/main/Login";
+
+// COMPONENTS REGISTRATION
+import UserRegistration from "./components/registration/UserRegistration";
+import OwnerRegistration from "./components/registration/OwnerRegistration";
+import RestaurantRegistration from "./components/registration/RestaurantRegistration";
+
+// COMPONENTS PROFILE
+import RestaurantProfile from "./components/profile/RestaurantProfile";
+import UserProfile from "./components/profile/UserProfile";
 
 function App() {
+  const [restaurants, setRestaurants] = useState("");
+  const [restaurantProfile, setRestaurantProfile] = useState("");
+  const [menu, setMenu] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header"></header>
-    </div>
+    <main className="app--main">
+      <Header />
+      <Category />
+
+      <Routes>
+        {/* login and registration form | open for everyone */}
+        <Route path="auth" element={<Login />} />
+        <Route path="register-user" element={<UserRegistration />} />
+        <Route path="register-owner" element={<OwnerRegistration />} />
+
+        {/* restaurant for everybody */}
+        <Route
+          path="/"
+          element={
+            <Restaurants
+              restaurants={restaurants}
+              setRestaurants={setRestaurants}
+            />
+          }
+        />
+
+        <Route
+          path="/restaurant/:id"
+          element={
+            <RestaurantProfile
+              menu={menu}
+              setMenu={setMenu}
+              restaurantProfile={restaurantProfile}
+              setRestaurantProfile={setRestaurantProfile}
+            />
+          }
+        />
+        {/* <Route path="/register-restaurant" element={<UserRegistration />} />  */}
+      </Routes>
+      <RestaurantRegistration />
+      <Footer />
+    </main>
   );
 }
 

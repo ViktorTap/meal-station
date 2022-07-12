@@ -1,3 +1,296 @@
-.App {
-  text-align: center;
+HTML,
+body {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
+
+a:link {
+  text-decoration: none;
+}
+
+.app--main {
+  margin: auto;
+  height: auto;
+  width: 75%;
+  font-family: "Poppins", sans-serif;
+  border: 2px solid orange;
+}
+
+/* HEADER STARTS */
+.header--main {
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fffcf4;
+  /* border: 2px solid blue; */
+}
+
+.header--logo {
+  display: flex;
+  gap: 15px;
+  color: #34571a;
+}
+.header--logo > img {
+  width: 100px;
+  height: 100px;
+  margin-left: 15px;
+}
+
+.header--navigation {
+  display: flex;
+  align-items: center;
+  width: 25%;
+  justify-content: space-around;
+  /* border: 2px solid red; */
+}
+
+.header--navigation > h3 {
+  color: #34571a;
+}
+
+/* HEADER ENDS */
+/* CATEGORIES STARTS */
+
+/* .category--main {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 2px solid orange;
+} */
+
+.category--main-item {
+  border: 2px solid green;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.category--main-item > h4,
+p {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+.category--main-item > img {
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+}
+
+/* CATEGORIES ENDS */
+/* RESTAURANTS STARTS */
+.restaurants--main {
+  margin: 10px;
+  height: auto;
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: auto auto auto auto auto;
+  grid-template-rows: auto auto auto;
+}
+
+.restaurant-card--main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 275px;
+  height: 400px;
+  background-color: #fffcf4;
+  border-radius: 15px;
+  border: 1px solid #34571a;
+  margin: 5px 0 5px 0;
+}
+.restaurant-card--main > img {
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  border-radius: 15px;
+  margin-bottom: 5px;
+}
+
+.restaurant-card--description {
+  font-style: italic;
+}
+/* RESTAURANTS ENDS */
+/* RESTAURANT PROFILE STARTS */
+.restaurant-profile--container-main {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 75vh;
+}
+.restaurant-profile--main {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 400px;
+}
+
+.restaurant-profile--main > p {
+  margin: 5px 0 5px 0;
+}
+
+.restaurant-profile--category-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 7.5px;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin: 15px 0 15px 0;
+}
+
+.restaurant-profile--main > img {
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.restaurant-profile--category-container > p,
+h4 {
+  margin: 3px 0 3px 0;
+}
+/* RESTAURANT PROFILE ENDS */
+/* MENU STARTS */
+
+.menu--main {
+  display: flex;
+  width: 25%;
+  flex-direction: column;
+}
+
+.dish-card--main {
+  width: 100%;
+  margin: 10px 0 10px 0;
+  border: 2px solid #34571a;
+  border-radius: 15px;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+.dish-card--info-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.dish-card--main:hover {
+  background-color: #fffcf4;
+  transform: scale(1.1);
+}
+
+.dish-card--main > img {
+  object-fit: cover;
+  width: 100px;
+  height: 100px;
+  margin-right: 15px;
+  border-radius: 15px;
+}
+
+/* MENU ENDS */
+/* FOOTER STARTS */
+
+.footer--main {
+  background-color: #fffcf4;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/* FOOTER ENDS */
+/* USER REGISTRATION STARTS */
+.user-registration--main {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 400px;
+  height: 60vh;
+  background-color: #fffcf4;
+  margin-bottom: 15px;
+  border-radius: 15px;
+}
+
+.user-registration--main > form > input[type="text"] {
+  width: 100%;
+}
+
+.user-registration--main > form > button {
+  width: 100%;
+  height: 30px;
+}
+
+.user-registration--valid {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+.user-registration--invalid {
+  color: red;
+  margin-left: 0.25rem;
+}
+.user-registration--instructions {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: #000;
+  color: #fff;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
+}
+.user-registration--offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.user-registration--hide {
+  display: none;
+}
+
+.user-registration--errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* USER REGISTRATION ENDS */
+/* LOGIN STARTS */
+.login--main {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 400px;
+  height: 30vh;
+  background-color: #fffcf4;
+  margin-bottom: 15px;
+  border-radius: 15px;
+}
+
+.login--main > form > input {
+  width: 175px;
+}
+
+.login--main > form > button {
+  margin: 15px 0 15px 0;
+  width: 100%;
+  height: 30px;
+}
+/* LOGIN ENDS */

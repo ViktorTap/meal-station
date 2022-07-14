@@ -23,6 +23,7 @@ export default function UserRegistration() {
     firstname: "",
     lastname: "",
     address: "",
+    // roles: {},
   });
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
@@ -68,6 +69,7 @@ export default function UserRegistration() {
         [name]: value,
       };
     });
+    console.log(user);
   }
 
   const handleSubmit = async (event) => {
@@ -80,6 +82,7 @@ export default function UserRegistration() {
     const firstname = user.firstname;
     const lastname = user.lastname;
     const address = user.address;
+    // const roles = user.roles;
 
     if (!v1 || !v2) {
       setErrMsg("Invalid Entry");
@@ -88,7 +91,15 @@ export default function UserRegistration() {
     try {
       const response = await axios.post(
         REGISTER_URL,
-        JSON.stringify({ username, firstname, lastname, address, password }),
+        JSON.stringify({
+          username,
+          firstname,
+          lastname,
+          address,
+          password,
+          // roles,
+        }),
+
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
@@ -115,7 +126,7 @@ export default function UserRegistration() {
         <section>
           <h1>Success!</h1>
           <p>
-            <Link to={"/"}>
+            <Link to={"/auth"}>
               <h4>Sign In</h4>
             </Link>
           </p>
@@ -135,7 +146,10 @@ export default function UserRegistration() {
           </p>
 
           <div className="user-registration--main">
+            <p>Want to create own restaurant? </p>
+            <Link to="/register-owner">Register as a owner.</Link>
             <h1>Account Registration</h1>
+
             <form onSubmit={handleSubmit}>
               <label htmlFor="username">
                 Username:
@@ -210,6 +224,31 @@ export default function UserRegistration() {
                 onBlur={() => setUserFocus(false)}
               />
               <br />
+              {/* <label htmlFor="user">User:</label>
+              <input
+                type="radio"
+                id="user"
+                name="roles"
+                value={{ User: 2001 }}
+                ref={userRef}
+                required
+                onChange={handleChange}
+                onFocus={() => setUserFocus(true)}
+                onBlur={() => setUserFocus(false)}
+              />
+              <br />
+              <label htmlFor="owner">Owner:</label>
+              <input
+                type="radio"
+                id="owner"
+                name="roles"
+                value={{ Owner: 1984 }}
+                ref={userRef}
+                onChange={handleChange}
+                onFocus={() => setUserFocus(true)}
+                onBlur={() => setUserFocus(false)}
+              />
+              <br /> */}
               <label htmlFor="address">Address:</label>
               <input
                 type="text"

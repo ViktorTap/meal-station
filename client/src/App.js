@@ -4,12 +4,14 @@ import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
 // COMPONENTS MAIN
-import Layout from "./components/main/Layout";
 import Header from "./components/main/Header";
 import Category from "./components/main/Category";
 import Restaurants from "./components/main/Restaurants";
 import Footer from "./components/main/Footer";
 import Login from "./components/main/Login";
+import RequireAuth from "./components/main/RequireAuth";
+import Unauthorized from "./components/main/Unauthorized";
+import Missing from "./components/main/Missing";
 
 // COMPONENTS REGISTRATION
 import UserRegistration from "./components/registration/UserRegistration";
@@ -32,9 +34,11 @@ function App() {
 
       <Routes>
         {/* login and registration form | open for everyone */}
+
         <Route path="auth" element={<Login />} />
         <Route path="register-user" element={<UserRegistration />} />
         <Route path="register-owner" element={<OwnerRegistration />} />
+        <Route path="unauthorized" element={<Unauthorized />} />
 
         {/* restaurant for everybody */}
         <Route
@@ -58,9 +62,24 @@ function App() {
             />
           }
         />
-        {/* <Route path="/register-restaurant" element={<UserRegistration />} />  */}
+        {/* profile CRUD only for authenticated */}
+        <Route element={<RequireAuth allowedRoles={[2001, 1984]} />}>
+          <Route path="/profile" element={<UserProfile />} />
+        </Route>
+
+        {/* restaurant CRUD only for owner*/}
+        <Route element={<RequireAuth allowedRoles={[1984]} />}>
+          <Route
+            path="/restaurant/register-restaurant"
+            element={<RestaurantRegistration />}
+          />
+        </Route>
+        {/* dish CRUD only for owner*/}
+
+        {/* missing for everybody */}
+        <Route path="*" element={<Missing />} />
       </Routes>
-      <RestaurantRegistration />
+
       <Footer />
     </main>
   );

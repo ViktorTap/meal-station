@@ -25,10 +25,8 @@ const userSchema = new Schema({
   roles: {
     User: {
       type: Number,
-      default: 2001, // if nothing else then automatically assained to default value
+      default: 2001,
     },
-    Owner: Number,
-    Admin: Number,
   },
   password: {
     type: String,

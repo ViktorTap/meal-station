@@ -6,6 +6,7 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/; //start with a-zA-Z must be followed by next array and must be 3 - 23 char long
@@ -123,7 +124,7 @@ export default function UserRegistration() {
         <section>
           <h1>Success! Now you can add your restaurant</h1>
           <p>
-            <a href="#">Sign In</a>
+            <Link to="/auth">Sign In</Link>
           </p>
         </section>
       ) : (
@@ -141,6 +142,8 @@ export default function UserRegistration() {
           </p>
 
           <div className="user-registration--main">
+            <p>Want to be just a user? </p>
+            <Link to="/register-user">Register as a user.</Link>
             <h1>Owner Registration</h1>
             <form onSubmit={handleSubmit}>
               <label htmlFor="username">

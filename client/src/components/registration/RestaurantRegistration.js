@@ -21,49 +21,10 @@ export default function RestaurantRegistration() {
     description: "",
     address: "",
     category: [],
-    //   {
-    //     name: "Cafe",
-    //     checked: false,
-    //   },
-    //   {
-    //     name: "Pizzeria",
-    //     checked: false,
-    //   },
-    //   {
-    //     name: "Burgers",
-    //     checked: false,
-    //   },
-    //   {
-    //     name: "Buffet",
-    //     checked: false,
-    //   },
-    //   {
-    //     name: "Fine Dining",
-    //     checked: false,
-    //   },
-    //   {
-    //     name: "Fast Food",
-    //     checked: false,
-    //   },
-    //   {
-    //     name: "Family Style",
-    //     checked: false,
-    //   },
-    //   {
-    //     name: "Asian",
-    //     checked: false,
-    //   },
-    //   {
-    //     name: "Mediterranean",
-    //     checked: false,
-    //   },
-    //   {
-    //     name: "Pastries",
-    //     checked: false,
-    //   },
     phoneNumber: "",
     priceClass: "",
     openHours: "",
+    restaurantPicture: "",
   });
   const [validName, setValidName] = useState(false);
   const [restaurantFocus, setRestaurantFocus] = useState(false);
@@ -87,7 +48,7 @@ export default function RestaurantRegistration() {
   }, [restaurant]);
 
   function handleChange(event) {
-    const { name, value, type, checked } = event.target;
+    const { name, value, type } = event.target;
 
     setRestaurant((prevRestaurant) => {
       return {
@@ -113,6 +74,7 @@ export default function RestaurantRegistration() {
     const phoneNumber = restaurant.phoneNumber;
     const priceClass = restaurant.priceClass;
     const openHours = restaurant.openHours;
+    const restaurantPicture = restaurant.restaurantPicture;
 
     if (!v1) {
       setErrMsg("Invalid Entry");
@@ -129,6 +91,7 @@ export default function RestaurantRegistration() {
           phoneNumber,
           priceClass,
           openHours,
+          restaurantPicture,
         }),
         {
           headers: { "Content-Type": "application/json" },
@@ -279,15 +242,15 @@ export default function RestaurantRegistration() {
                   onFocus={() => setRestaurantFocus(true)}
                   onBlur={() => setRestaurantFocus(false)}
                 />
-                {/* 
+
                 <label htmlFor="burgers">Burgers: </label>
                 <input
                   type="checkbox"
                   id="burgers"
-                  name={restaurant.category[2].name}
-                  value={restaurant.category[2].name}
+                  name="category"
+                  value="Burgers"
                   ref={restaurantRef}
-                  onChange={(e) => e.target.checked}
+                  onChange={handleChange}
                   onFocus={() => setRestaurantFocus(true)}
                   onBlur={() => setRestaurantFocus(false)}
                 />
@@ -295,10 +258,10 @@ export default function RestaurantRegistration() {
                 <input
                   type="checkbox"
                   id="buffet"
-                  name={restaurant.category[3].name}
-                  value={restaurant.category[3].name}
+                  name="category"
+                  value="Buffet"
                   ref={restaurantRef}
-                  onChange={(e) => e.target.checked}
+                  onChange={handleChange}
                   onFocus={() => setRestaurantFocus(true)}
                   onBlur={() => setRestaurantFocus(false)}
                 />
@@ -306,10 +269,10 @@ export default function RestaurantRegistration() {
                 <input
                   type="checkbox"
                   id="fine-dining"
-                  name={restaurant.category[4].name}
-                  value={restaurant.category[4].name}
+                  name="category"
+                  value="Fine Dining"
                   ref={restaurantRef}
-                  onChange={(e) => e.target.checked}
+                  onChange={handleChange}
                   onFocus={() => setRestaurantFocus(true)}
                   onBlur={() => setRestaurantFocus(false)}
                 />
@@ -317,10 +280,10 @@ export default function RestaurantRegistration() {
                 <input
                   type="checkbox"
                   id="fast-food"
-                  name={restaurant.category[5].name}
-                  value={restaurant.category[5].name}
+                  name="category"
+                  value="Fast Food"
                   ref={restaurantRef}
-                  onChange={(e) => e.target.checked}
+                  onChange={handleChange}
                   onFocus={() => setRestaurantFocus(true)}
                   onBlur={() => setRestaurantFocus(false)}
                 />
@@ -328,10 +291,10 @@ export default function RestaurantRegistration() {
                 <input
                   type="checkbox"
                   id="family-style"
-                  name={restaurant.category[6].name}
-                  value={restaurant.category[6].name}
+                  name="category"
+                  value="Family Style"
                   ref={restaurantRef}
-                  onChange={(e) => e.target.checked}
+                  onChange={handleChange}
                   onFocus={() => setRestaurantFocus(true)}
                   onBlur={() => setRestaurantFocus(false)}
                 />
@@ -339,10 +302,10 @@ export default function RestaurantRegistration() {
                 <input
                   type="checkbox"
                   id="asian"
-                  name={restaurant.category[7].name}
-                  value={restaurant.category[7].name}
+                  name="category"
+                  value="Asian"
                   ref={restaurantRef}
-                  onChange={(e) => e.target.checked}
+                  onChange={handleChange}
                   onFocus={() => setRestaurantFocus(true)}
                   onBlur={() => setRestaurantFocus(false)}
                 />
@@ -351,10 +314,10 @@ export default function RestaurantRegistration() {
                 <input
                   type="checkbox"
                   id="mediterranean"
-                  name={restaurant.category[8].name}
-                  value={restaurant.category[8].name}
+                  name="category"
+                  value="Mediterranean"
                   ref={restaurantRef}
-                  onChange={(e) => e.target.checked}
+                  onChange={handleChange}
                   onFocus={() => setRestaurantFocus(true)}
                   onBlur={() => setRestaurantFocus(false)}
                 />
@@ -363,13 +326,13 @@ export default function RestaurantRegistration() {
                 <input
                   type="checkbox"
                   id="pastries"
-                  name={restaurant.category[8].name}
-                  value={restaurant.category[8].name}
+                  name="category"
+                  value="Pastries"
                   ref={restaurantRef}
-                  onChange={(e) => e.target.checked}
+                  onChange={handleChange}
                   onFocus={() => setRestaurantFocus(true)}
                   onBlur={() => setRestaurantFocus(false)}
-                /> */}
+                />
               </section>
               <br />
               <label htmlFor="phoneNumber">Phone:</label>
@@ -422,6 +385,17 @@ export default function RestaurantRegistration() {
               >
                 Example: 10:00 - 19:00
               </p>
+              <label htmlFor="restaurantPicture">Restaurant picture url:</label>
+
+              <input
+                type="text"
+                id="restaurantPicture"
+                name="restaurantPicture"
+                onChange={handleChange}
+                value={restaurant.restaurantPicture}
+                onFocus={() => setRestaurantFocus(true)}
+                onBlur={() => setRestaurantFocus(false)}
+              />
               <br />
               <button
                 disabled={!validName ? true : false}

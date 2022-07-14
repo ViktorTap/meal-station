@@ -19,7 +19,9 @@ export default function Header() {
         <Link to={"/auth"}>
           <h3>SIGN IN</h3>
         </Link>
-        <h3>PROFILE</h3>
+        <Link to="/profile">
+          <h3>PROFILE</h3>
+        </Link>
       </nav>
     </header>
   );

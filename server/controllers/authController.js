@@ -1,4 +1,6 @@
+const mongoose = require("mongoose");
 const User = require("../model/User");
+const Owner = require("../model/Owner");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -11,18 +13,25 @@ const handleLogin = async (req, res) => {
       .json({ message: "Username and password are required" });
 
   const foundUser = await User.findOne({ username: user }).exec();
-  if (!foundUser) return res.sendStatus(401); // Unauthorized
+  const foundOwner = await Owner.findOne({ username: user }).exec();
+  if (!foundUser && !foundOwner) return res.sendStatus(401); // Unauthorized
 
   // evaluate password
-  const match = await bcrypt.compare(password, foundUser.password);
+
+  const match = await bcrypt.compare(
+    password,
+    foundUser ? foundUser.password : foundOwner.password
+  );
   if (match) {
-    const roles = Object.values(foundUser.roles).filter(Boolean); // eliminating nulls
+    const roles = Object.values(
+      foundUser ? foundUser.roles : foundOwner.roles
+    ).filter(Boolean); // eliminating nulls
 
     // create JWTs
     const accessToken = jwt.sign(
       {
         UserInfo: {
-          username: foundUser.username,
+          username: foundUser ? foundUser.username : foundOwner.username,
           roles: roles,
         },
       },
@@ -30,14 +39,17 @@ const handleLogin = async (req, res) => {
       { expiresIn: "120s" }
     );
     const refreshToken = jwt.sign(
-      { username: foundUser.username },
+      { username: foundUser ? foundUser.username : foundOwner.username },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "1d" }
     );
     // Saving refreshToken with current user
-    foundUser.refreshToken = refreshToken;
-    const result = await foundUser.save();
-    console.log(result);
+    foundUser
+      ? foundUser.refreshToken
+      : (foundOwner.refreshToken = refreshToken);
+    foundUser ? await foundUser.save() : await foundOwner.save();
+
+    // changed to await functions...
 
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
@@ -45,7 +57,10 @@ const handleLogin = async (req, res) => {
       // secure: true,
       maxAge: 24 * 60 * 60 * 1000,
     });
-    res.json({ roles, accessToken, foundUser });
+    const foundResult = foundUser ? foundUser : foundOwner;
+    const id = mongoose.Types.ObjectId(foundResult._id);
+
+    res.json({ roles, accessToken, foundResult, id });
   } else {
     res.sendStatus(401);
   }

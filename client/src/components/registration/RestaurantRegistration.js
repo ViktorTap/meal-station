@@ -8,15 +8,20 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "../../api/axios";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
-const RESTAURANT_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/; //start with a-zA-Z must be followed by next array and must be 3 - 23 char long
+const RESTAURANT_REGEX = /^[a-zA-Z][a-zA-Z0-9-_ ]{3,23}$/; //start with a-zA-Z must be followed by next array and must be 3 - 23 char long
 const REGISTER_URL = "/restaurant/register-restaurant";
 
 export default function RestaurantRegistration() {
   const restaurantRef = useRef();
   const errRef = useRef();
 
+  const user = useAuth();
+  const id = user.auth.id;
+
   const [restaurant, setRestaurant] = useState({
+    ownerId: id,
     name: "",
     description: "",
     address: "",
@@ -67,6 +72,7 @@ export default function RestaurantRegistration() {
     // if button enabled with JS hack
     const v1 = RESTAURANT_REGEX.test(restaurant.name);
 
+    const ownerId = restaurant.ownerId;
     const name = restaurant.name;
     const description = restaurant.description;
     const address = restaurant.address;
@@ -84,6 +90,7 @@ export default function RestaurantRegistration() {
       const response = await axios.post(
         REGISTER_URL,
         JSON.stringify({
+          ownerId,
           name,
           description,
           address,
@@ -98,7 +105,7 @@ export default function RestaurantRegistration() {
           withCredentials: true,
         }
       );
-      console.log(response);
+      console.log(response.data);
       setSuccess(true);
       // clear input fields set states back to empty strings
     } catch (err) {
@@ -117,10 +124,12 @@ export default function RestaurantRegistration() {
     <>
       {success ? (
         <section>
-          <h1>Success!</h1>
+          <h1>
+            Success! New restaurant {restaurant.name} has been registered!
+          </h1>
           <p>
             <Link to={"/"}>
-              <h4>Sign In</h4>
+              <h4>Home Page</h4>
             </Link>
           </p>
         </section>
@@ -141,7 +150,7 @@ export default function RestaurantRegistration() {
           <div className="user-registration--main">
             <h1>Restaurant Registration</h1>
             <form onSubmit={handleSubmit}>
-              <label htmlFor="username">
+              <label htmlFor="name">
                 Name:
                 <span
                   className={
@@ -189,7 +198,7 @@ export default function RestaurantRegistration() {
                 <br />
                 Must begin with a letter.
                 <br />
-                Letters, numbers, underscores, hyphens allowed.
+                Letters, numbers, underscores, spaces, hyphens allowed.
               </p>
               <br />
               <label htmlFor="description">Description:</label>

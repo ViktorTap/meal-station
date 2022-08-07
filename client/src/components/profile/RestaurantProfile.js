@@ -1,21 +1,34 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "../../api/axios";
 import Menu from "../main/Menu";
+import useAuth from "../../hooks/useAuth";
 
 export default function RestaurantProfile({
   restaurantProfile,
   setRestaurantProfile,
+  restaurantName,
+  setRestaurantName,
+  restaurantOwnerId,
+  setRestaurantOwnerId,
   menu,
   setMenu,
+  setCart,
+  quantity,
+  setQuantity,
+  order,
+  setOrder,
 }) {
   const { id } = useParams();
   const API_URL_BY_ID = `/restaurant/${id}`;
+  const user = useAuth();
+  const userId = user.auth.id;
 
   async function getRestaurantById() {
     try {
       const response = await axios.get(API_URL_BY_ID);
       const restaurant = response.data;
+
       const RestaurantById = () => {
         return (
           <div key={restaurant.id} className="restaurant-profile--main">
@@ -35,6 +48,9 @@ export default function RestaurantProfile({
           </div>
         );
       };
+
+      setRestaurantOwnerId(restaurant.ownerId);
+      setRestaurantName(restaurant.name);
       setRestaurantProfile(RestaurantById);
     } catch (err) {
       console.error(err);
@@ -47,9 +63,29 @@ export default function RestaurantProfile({
 
   return (
     <main className="restaurant-profile--container-main">
-      <Menu restaurantId={id} menu={menu} setMenu={setMenu} />
+      <Menu
+        restaurantId={id}
+        menu={menu}
+        setMenu={setMenu}
+        setCart={setCart}
+        restaurantName={restaurantName}
+        quantity={quantity}
+        setQuantity={setQuantity}
+        order={order}
+        setOrder={setOrder}
+      />
 
-      <div>{restaurantProfile}</div>
+      <div>
+        {restaurantProfile}
+
+        {user.auth.user && userId === restaurantOwnerId ? (
+          <Link
+            to={`/restaurant/${id}/menu/create`}
+          >{`Create new dish for ${restaurantName}`}</Link>
+        ) : (
+          ""
+        )}
+      </div>
     </main>
   );
 }

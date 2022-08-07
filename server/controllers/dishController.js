@@ -38,4 +38,17 @@ const getAllByRestaurantId = async (req, res) => {
   res.json(menu);
 };
 
-module.exports = { createNewDish, getAllByRestaurantId };
+// GET ONE BY ID
+const getDish = async (req, res) => {
+  if (!req?.params?.id)
+    return res.status(400).json({ message: "Dish ID required" });
+  const dish = await Dish.findOne({ _id: req.params.id }).exec();
+  if (!dish) {
+    return res
+      .status(204)
+      .json({ message: `No dish matches ID: ${req.params.id}` });
+  }
+  res.json(dish);
+};
+
+module.exports = { createNewDish, getAllByRestaurantId, getDish };

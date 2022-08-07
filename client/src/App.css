@@ -14,16 +14,19 @@ a:link {
   height: auto;
   width: 75%;
   font-family: "Poppins", sans-serif;
-  border: 2px solid orange;
 }
 
 /* HEADER STARTS */
 .header--main {
-  height: 100px;
+  height: 125px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: #fffcf4;
-  /* border: 2px solid blue; */
+  border-radius: 15px;
+  border: 1px solid #34571a;
+  margin-top: 15px;
+  box-shadow: 1.5px 3px;
 }
 
 .header--logo {
@@ -42,6 +45,7 @@ a:link {
   align-items: center;
   width: 25%;
   justify-content: space-around;
+  margin: 15px;
   /* border: 2px solid red; */
 }
 
@@ -52,21 +56,28 @@ a:link {
 /* HEADER ENDS */
 /* CATEGORIES STARTS */
 
-/* .category--main {
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  border: 2px solid orange;
-} */
+.category--main {
+  /* border: 1px solid #34571a; */
+  margin: 15px 0 15px 0;
+  background-color: white;
+  border-radius: 15px;
+  /* box-shadow: 1.5px 3px; */
+}
 
 .category--main-item {
-  border: 2px solid green;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 1px #34571a solid;
+  border-radius: 15px;
+  margin: 5px;
+  background-color: #fffcf4;
+  box-shadow: 1.5px 3px;
 }
 
+.category--main-div:hover {
+  cursor: pointer;
+}
 .category--main-item > h4,
 p {
   margin: 0;
@@ -85,12 +96,17 @@ p {
 /* CATEGORIES ENDS */
 /* RESTAURANTS STARTS */
 .restaurants--main {
-  margin: 10px;
-  height: auto;
+  max-height: 1300px;
+  overflow-y: auto;
+
   display: grid;
-  justify-content: space-between;
-  grid-template-columns: auto auto auto auto auto;
-  grid-template-rows: auto auto auto;
+  justify-content: center;
+  column-gap: 15px;
+  /* grid-template-columns: auto auto auto auto auto;
+  grid-template-rows: auto auto auto; */
+  grid-template-columns: repeat(5, auto);
+  grid-template-rows: repeat(3, auto);
+  margin-bottom: 15px;
 }
 
 .restaurant-card--main {
@@ -104,11 +120,21 @@ p {
   border-radius: 15px;
   border: 1px solid #34571a;
   margin: 5px 0 5px 0;
+  box-shadow: 1.5px 3px;
+  transition: all 0.4s ease-in-out;
 }
+
+.restaurant-card--main:hover {
+  cursor: pointer;
+  background-color: #e6ffe6;
+  box-shadow: 4.5px 9px;
+}
+
 .restaurant-card--main > img {
   object-fit: cover;
   width: 200px;
-  height: 200px;
+  /* height: 200px; */
+  overflow: hidden;
   border-radius: 15px;
   margin-bottom: 5px;
 }
@@ -132,6 +158,10 @@ p {
   align-items: center;
   height: 100%;
   width: 400px;
+  background-color: #fffcf4;
+  border-radius: 15px;
+  border: 1px solid #34571a;
+  box-shadow: 1.5px 3px;
 }
 
 .restaurant-profile--main > p {
@@ -146,6 +176,7 @@ p {
   border: 1px solid black;
   border-radius: 15px;
   margin: 15px 0 15px 0;
+  background-color: #fff;
 }
 
 .restaurant-profile--main > img {
@@ -165,21 +196,36 @@ h4 {
 
 .menu--main {
   display: flex;
-  width: 25%;
   flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+  width: 35%;
+  height: 600px;
+  overflow-y: auto;
+  flex-direction: column;
+  background-color: #fffcf4;
+  border-radius: 15px;
+  border: 1px solid #34571a;
+  box-shadow: 1.5px 3px;
 }
 
+.menu--main > div {
+  text-align: center;
+}
 .dish-card--main {
-  width: 100%;
-  margin: 10px 0 10px 0;
-  border: 2px solid #34571a;
+  width: 75%;
+  margin: auto;
+  /* margin: 10px 0 10px 0; */
+  border: 1px solid #34571a;
   border-radius: 15px;
-  padding: 5px;
+  /* padding: 5px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: all 0.4s ease-in-out;
   cursor: pointer;
+  box-shadow: 1.5px 3px;
+  background-color: #fff;
 }
 
 .dish-card--info-container {
@@ -189,7 +235,7 @@ h4 {
 }
 
 .dish-card--main:hover {
-  background-color: #fffcf4;
+  background-color: #e6ffe6;
   transform: scale(1.1);
 }
 
@@ -202,13 +248,99 @@ h4 {
 }
 
 /* MENU ENDS */
+/* PROFILE STARTS*/
+.profile--main {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 15px;
+}
+
+.profile--container {
+  display: flex;
+  justify-content: space-around;
+
+  margin-bottom: 15px;
+}
+.profile--info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #34571a;
+  background-color: #fffcf4;
+  width: 275px;
+  height: 300px;
+  overflow-y: auto;
+  border-radius: 15px;
+  box-shadow: 1.5px 3px;
+}
+
+.profile--orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #34571a;
+  background-color: #fffcf4;
+  width: 375px;
+  height: 300px;
+  overflow-y: auto;
+  border-radius: 15px;
+  box-shadow: 1.5px 3px;
+}
+
+.profile--buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 275px;
+}
+
+.profile--buttons > button {
+  width: 100%;
+  height: 5vh;
+  border-radius: 15px;
+  margin: 10px;
+  font-size: large;
+  box-shadow: 1.5px 3px;
+  background-color: #fffcf4;
+}
+
+.profile--buttons > button:active:hover {
+  background-color: #fff;
+  box-shadow: 0px 0.5px;
+  transform: translate(x, y);
+}
+
+.profile--my-restaurants {
+  height: 415px;
+  width: 100%;
+  overflow-y: auto;
+  display: grid;
+  justify-content: center;
+
+  grid-template-columns: auto auto auto auto auto;
+}
+/* PROFILE ENDS */
 /* FOOTER STARTS */
 
 .footer--main {
   background-color: #fffcf4;
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-around;
+  height: 100%;
+  border-radius: 15px;
+  border: 1px solid #34571a;
+
+  margin-bottom: 15px;
+  box-shadow: 1.5px 3px;
+}
+
+.footer--main > p {
+  margin-top: 15px;
 }
 
 /* FOOTER ENDS */
@@ -294,3 +426,54 @@ h4 {
   height: 30px;
 }
 /* LOGIN ENDS */
+/* DISH PROFILE STARTS (before adding to cart)*/
+
+.dishProfile--main-container {
+  height: 48vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dishProfile--main {
+  width: 25%;
+  height: 65%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  border: 1px solid #34571a;
+  box-shadow: 1.5px 3px;
+  background-color: #fffcf4;
+}
+
+.dishProfile--dish-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dishProfile--buttons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.addButton {
+  height: 40px;
+  width: 115px;
+  font-size: large;
+}
+
+.dishProfile-buttons--buttons {
+  width: 40px;
+  height: 40px;
+  font-size: large;
+}
+
+/* DISH PROFILE ENDS*/

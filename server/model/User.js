@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
-const orderSchema = new Schema({
-  item: String,
-  quantity: Number,
-});
+const { ObjectId } = mongoose.Schema;
 
 const userSchema = new Schema({
   username: {
@@ -32,9 +28,15 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  orders: [orderSchema],
+  orders: [
+    {
+      type: ObjectId,
+      ref: "Order",
+    },
+  ],
+
   refreshToken: String,
 });
 
-module.exports = mongoose.model("Order", orderSchema);
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+module.exports = User;

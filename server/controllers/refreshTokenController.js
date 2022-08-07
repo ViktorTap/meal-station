@@ -1,4 +1,5 @@
 const User = require("../model/User");
+const Owner = require("../model/Owner");
 
 const jwt = require("jsonwebtoken");
 
@@ -9,12 +10,22 @@ const handleRefreshToken = async (req, res) => {
   const refreshToken = cookies.jwt;
 
   const foundUser = await User.findOne({ refreshToken }).exec();
-  if (!foundUser) return res.sendStatus(403); // Forbidden
+  const foundOwner = await Owner.findOne({ refreshToken }).exec();
+
+  if (!foundUser && !foundOwner) return res.sendStatus(403); // Forbidden
   // evaluate jwt
+  // CAN BE SOME BUGS CAUSE OWNER AND USER
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-    if (err || foundUser.username !== decoded.username)
+    if (
+      err ||
+      (foundUser.username !== decoded.username &&
+        foundOwner.username !== decoded.username)
+    )
       return res.sendStatus(403);
-    const roles = Object.values(foundUser.roles);
+
+    const roles = Object.values(
+      foundUser.roles ? foundUser.roles : foundOwner.roles
+    );
     const accessToken = jwt.sign(
       {
         UserInfo: {

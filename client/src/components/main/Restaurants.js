@@ -2,8 +2,13 @@ import { useEffect } from "react";
 import RestaurantCard from "./Card/RestaurantCard";
 import axios from "../../api/axios";
 
-export default function Restaurants({ restaurants, setRestaurants }) {
+export default function Restaurants({
+  restaurants,
+  setRestaurants,
+  refreshPage,
+}) {
   const API_URL = "/restaurant/all";
+
   async function getAllRestaurants() {
     try {
       const response = await axios.get(API_URL);
@@ -20,6 +25,6 @@ export default function Restaurants({ restaurants, setRestaurants }) {
   useEffect(() => {
     getAllRestaurants();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [refreshPage]);
   return <main className="restaurants--main">{restaurants}</main>;
 }

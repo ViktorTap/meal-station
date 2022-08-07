@@ -69,7 +69,6 @@ export default function UserRegistration() {
         [name]: value,
       };
     });
-    console.log(user);
   }
 
   const handleSubmit = async (event) => {
@@ -105,7 +104,7 @@ export default function UserRegistration() {
           withCredentials: true,
         }
       );
-      console.log(response);
+      // console.log(response);
       setSuccess(true);
       // clear input fields set states back to empty strings
     } catch (err) {
@@ -224,31 +223,7 @@ export default function UserRegistration() {
                 onBlur={() => setUserFocus(false)}
               />
               <br />
-              {/* <label htmlFor="user">User:</label>
-              <input
-                type="radio"
-                id="user"
-                name="roles"
-                value={{ User: 2001 }}
-                ref={userRef}
-                required
-                onChange={handleChange}
-                onFocus={() => setUserFocus(true)}
-                onBlur={() => setUserFocus(false)}
-              />
-              <br />
-              <label htmlFor="owner">Owner:</label>
-              <input
-                type="radio"
-                id="owner"
-                name="roles"
-                value={{ Owner: 1984 }}
-                ref={userRef}
-                onChange={handleChange}
-                onFocus={() => setUserFocus(true)}
-                onBlur={() => setUserFocus(false)}
-              />
-              <br /> */}
+
               <label htmlFor="address">Address:</label>
               <input
                 type="text"

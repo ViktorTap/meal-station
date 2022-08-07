@@ -37,7 +37,7 @@ const handleNewOwner = async (req, res) => {
     console.log(result);
     res
       .status(201)
-      .json({ success: `New user ${username} created! Welcome ${firstname}` });
+      .json({ success: `New owner ${username} created! Welcome ${firstname}` });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

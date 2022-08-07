@@ -3,6 +3,7 @@ const Restaurant = require("../model/Restaurant");
 // CREATE
 const createNewRestaurant = async (req, res) => {
   const {
+    ownerId,
     name,
     description,
     address,
@@ -10,8 +11,10 @@ const createNewRestaurant = async (req, res) => {
     phoneNumber,
     priceClass,
     openHours,
+    restaurantPicture,
   } = req.body;
   if (
+    !ownerId ||
     !name ||
     !category ||
     !description ||
@@ -30,8 +33,9 @@ const createNewRestaurant = async (req, res) => {
   if (duplicate) return res.sendStatus(409); // Conflict
 
   try {
-    // create and store the new restauran
+    // create and store the new restaurant
     const result = await Restaurant.create({
+      ownerId: ownerId,
       name: name,
       description: description,
       address: address,
@@ -39,6 +43,7 @@ const createNewRestaurant = async (req, res) => {
       phoneNumber: phoneNumber,
       priceClass: priceClass,
       openHours: openHours,
+      restaurantPicture: restaurantPicture,
     });
 
     console.log(result);

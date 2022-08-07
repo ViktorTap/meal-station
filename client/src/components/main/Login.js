@@ -38,12 +38,26 @@ export default function Login() {
           withCredentials: true,
         }
       );
-      console.log(JSON.stringify(response?.data));
 
+      const id = response?.data?.id;
       const accessToken = response?.data?.accessToken;
       const roles = response?.data.roles;
+      const firstname = response?.data.foundResult.firstname;
+      const lastname = response?.data.foundResult.lastname;
+      const address = response?.data.foundResult.address;
+      const orders = response?.data.foundResult.orders;
 
-      setAuth({ user, password, roles, accessToken });
+      setAuth({
+        id,
+        user,
+        // password,
+        roles,
+        accessToken,
+        firstname,
+        lastname,
+        address,
+        orders,
+      });
       // saved in global context
       setUser("");
       setPassword("");

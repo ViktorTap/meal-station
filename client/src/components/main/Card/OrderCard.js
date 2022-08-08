@@ -1,18 +1,25 @@
 import { Link } from "react-router-dom";
 
-const OrderCard = ({ order, restaurantId, created }) => {
+const OrderCard = ({ order }) => {
+  // Need to make this cleaner
+
+  const mappedItems = order.items.map((item) => {
+    return <p>{item.name}</p>;
+  });
+
+  const orders = (
+    <div>
+      <p>{order.created}</p>
+      <p>{mappedItems}</p>
+      <p>💰 {order.totalPrice}</p>
+    </div>
+  );
+
   return (
     <>
       {/* <Link to={`/restaurant/${restaurantId}/menu/${dish._id}`}> */}
       <section className="dish-card--main">
-        <div className="dish-card--info-container">
-          <h4>{order.items.name}</h4>
-
-          {/* <p>{order.description}</p> */}
-          <p>💰 {order.items.price}</p>
-          <p>{created}</p>
-        </div>
-        <img src={order.dishPicture} alt="dish" />
+        <div className="dish-card--info-container">{orders}</div>
       </section>
       {/* </Link> */}
     </>

@@ -76,6 +76,10 @@ const getRestaurant = async (req, res) => {
   res.json(restaurant);
 };
 
+const addNewOrder = async (req, res) => {
+  if (!req?.params?.id)
+    return res.status(400).json({ message: "Restaurant ID is required" });
+};
 module.exports = {
   createNewRestaurant,
   getAllRestaurants,

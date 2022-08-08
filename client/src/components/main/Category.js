@@ -87,7 +87,7 @@ export default function Category({ setRestaurants }) {
       const allCafe = response.data.map((restaurant) => {
         return <RestaurantCard key={restaurant._id} restaurant={restaurant} />;
       });
-      console.log(`/category/${searchName}`);
+      // console.log(`/category/${searchName}`);
       setRestaurants(allCafe);
     } catch (err) {
       console.error(err);

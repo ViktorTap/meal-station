@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { ObjectId } = mongoose.Schema;
 
 const userSchema = new Schema({
   username: {
@@ -30,8 +29,8 @@ const userSchema = new Schema({
   },
   orders: [
     {
-      type: ObjectId,
-      ref: "Order",
+      type: [Schema.Types.Mixed],
+      created: { type: Date, default: Date.now },
     },
   ],
 

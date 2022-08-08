@@ -40,8 +40,39 @@ const UserProfile = ({
       const response = await axios.get(`/profile/${user.auth.id}`);
       const userDataOrders = response.data.orders;
 
-      console.log(userDataOrders);
+      // console.log(userDataOrders);
+      // console.log(userDataOrders[0][0].order.items);
 
+      function getOrdersFromOrders() {
+        let orderArr = [];
+        let orderItemsArrs = [];
+        let orderObjectArr = [];
+
+        if (userDataOrders.length) {
+          for (let i = 0; i < userDataOrders.length; i++) {
+            for (let x = 0; x < userDataOrders[i].length; x++) {
+              orderArr.push(userDataOrders[i][x].order);
+              orderItemsArrs.push(userDataOrders[i][x].order.items);
+            }
+          }
+
+          for (let y = 0; y < orderItemsArrs.length; y++) {
+            for (let z = 0; z < orderItemsArrs[y].length; z++) {
+              orderObjectArr.push(orderItemsArrs[y][z]);
+            }
+          }
+        }
+
+        const ordersReadyForCard = orderArr.reverse().map((order) => {
+          return <OrderCard order={order} items={orderObjectArr} />;
+        });
+        // const toimiiko = orderObjectArr.map((items) => {
+        //   return <OrderCard items={items} order={orderArr} />;
+        // });
+
+        setOrdersHistory(ordersReadyForCard);
+      }
+      getOrdersFromOrders();
       // const wholeOrdersArr = wholeOrders.map((array) =>
       //   array.map((order, index) => {
       //     return <OrderCard order={order} key={index} />;

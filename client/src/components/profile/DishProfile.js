@@ -47,7 +47,6 @@ export const DishProfile = ({
       if (item.id === order._id) {
         return {
           ...item,
-
           quantity: quantity + item.quantity,
           price: parseFloat(order.price * (quantity + item.quantity)).toFixed(
             2
@@ -56,6 +55,55 @@ export const DishProfile = ({
       }
       return item;
     });
+
+    console.log(cartItems.length);
+
+    if (cartItems.length) {
+      const isSameRestaurant = cartItems.some(
+        (item) => item.restaurantId === order.restaurantId
+      );
+      if (!isSameRestaurant) {
+        if (
+          window.confirm(
+            "Your previous order is from different restaurant.\nDo you want to replace order?"
+          )
+        ) {
+          setCartItems([
+            {
+              id: order._id,
+              userId: user.auth.id,
+              restaurantId: order.restaurantId,
+              restaurantName: restaurantName,
+              dishPicture: order.dishPicture,
+              name: order.name,
+              price: parseFloat(order.price * quantity).toFixed(2),
+              quantity: quantity,
+            },
+          ]);
+          setQuantity(1);
+          setAddOrder(true);
+        }
+
+        return;
+      }
+      isDublicate
+        ? setCartItems(cartItemsMapped)
+        : setCartItems([
+            ...cartItemsMapped,
+            {
+              id: order._id,
+              userId: user.auth.id,
+              restaurantId: order.restaurantId,
+              restaurantName: restaurantName,
+              dishPicture: order.dishPicture,
+              name: order.name,
+              price: parseFloat(order.price * quantity).toFixed(2),
+              quantity: quantity,
+            },
+          ]);
+      setQuantity(1);
+      setAddOrder(true);
+    }
 
     isDublicate
       ? setCartItems(cartItemsMapped)

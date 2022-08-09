@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Restaurant = require("../model/Restaurant");
 
 // CREATE
@@ -77,11 +78,47 @@ const getRestaurant = async (req, res) => {
 };
 
 const addNewOrder = async (req, res) => {
-  if (!req?.params?.id)
+  if (!req?.params?.id) {
     return res.status(400).json({ message: "Restaurant ID is required" });
+  }
+
+  const id = mongoose.Types.ObjectId(req.params.id);
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Check ID. ID is not valid" });
+  }
+
+  const restaurant = await Restaurant.findById(id);
+
+  if (!restaurant) {
+    return res.status(404).json({ message: "No restaurant found" });
+  }
+
+  if (restaurant) {
+    const order = req.body;
+
+    if (!order) {
+      return res.status(400).json({ message: "All information is required" });
+    }
+
+    Restaurant.findOneAndUpdate(
+      { _id: id },
+      { $push: { orders: order } },
+      function (error, success) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(success);
+        }
+        res.status(201).json({
+          success: `New order is registered for ${restaurant.name}`,
+        });
+      }
+    );
+  }
 };
 module.exports = {
   createNewRestaurant,
   getAllRestaurants,
   getRestaurant,
+  addNewOrder,
 };

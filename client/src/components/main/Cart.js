@@ -22,8 +22,15 @@ const Cart = ({ cartItems, setCartItems }) => {
 
   const today = format(new Date(), "dd.MM.yyyy HH:mm:ss");
 
+  const restaurantIndex = cartItems[0]?.restaurantId;
+  console.log(restaurantIndex);
+
   const handleSubmitCart = async (event) => {
     event.preventDefault();
+
+    const firstname = user.auth.firstname;
+    const lastname = user.auth.lastname;
+    const address = user.auth.address;
 
     const response = await axios.put(
       `/${user.auth.id}/cart`,
@@ -40,6 +47,25 @@ const Cart = ({ cartItems, setCartItems }) => {
       }
     );
 
+    const restaurantResponse = await axios.put(
+      `restaurant/${restaurantIndex}/add-order`,
+      JSON.stringify({
+        order: {
+          items: cartItems,
+          firstname,
+          lastname,
+          address,
+          totalPrice: sessionTotalPrice,
+          created: today,
+        },
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
+
+    console.log(restaurantResponse);
     console.log(response);
 
     setSuccess(true);

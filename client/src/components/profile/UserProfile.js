@@ -40,9 +40,6 @@ const UserProfile = ({
       const response = await axios.get(`/profile/${user.auth.id}`);
       const userDataOrders = response.data.orders;
 
-      // console.log(userDataOrders);
-      // console.log(userDataOrders[0][0].order.items);
-
       function getOrdersFromOrders() {
         let orderArr = [];
         let orderItemsArrs = [];
@@ -66,44 +63,10 @@ const UserProfile = ({
         const ordersReadyForCard = orderArr.reverse().map((order) => {
           return <OrderCard order={order} items={orderObjectArr} />;
         });
-        // const toimiiko = orderObjectArr.map((items) => {
-        //   return <OrderCard items={items} order={orderArr} />;
-        // });
 
         setOrdersHistory(ordersReadyForCard);
       }
       getOrdersFromOrders();
-      // const wholeOrdersArr = wholeOrders.map((array) =>
-      //   array.map((order, index) => {
-      //     return <OrderCard order={order} key={index} />;
-      //   })
-      // );
-      // const orderItems = wholeOrders.order.items.map((item) => {
-      //   return <OrderCard order={item} key={item.id} />;
-      // });
-      // const getItemsFromOrders = wholeOrders.order.items.map((order) => {
-      //   return <OrderCard order={order.items} key={order.id} />;
-      // });
-      // const mappedOrders = userDataOrders.map((arr) =>
-      //   arr.map((element) =>
-      //     element.items.map((item) => {
-      //       return console.log(item);
-      //     })
-      //   )
-      // );
-
-      // const oikeastikko = toimiiko.map((element, index) =>
-      //   element.map((orderi) => {
-      //     return orderi.map((item) => {
-      //       return <OrderCard order={item} key={item.id} />;
-      //     });
-      //   })
-      // );
-      // setOrdersHistory(oikeastikko);
-
-      // setOrdersHistory(wholeOrdersArr);
-      // console.log("mapped : ", mappedOrders);
-      // console.log(userDataOrders.length);
     } catch (error) {
       console.log(error);
     }
@@ -210,7 +173,6 @@ const UserProfile = ({
         <div className="profile--orders">
           <h4>ORDERS HISTORY</h4>
           {ordersHistory}
-          {/* {user.auth.orders && orders.length > 1 ? orders : "No orders yet"} */}
         </div>
       </section>
       <section className="profile--my-restaurants">

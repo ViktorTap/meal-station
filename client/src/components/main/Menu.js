@@ -46,10 +46,18 @@ const Menu = ({
 
   return (
     <main className="menu--main">
-      <div>
-        <h3>MENU</h3>
-      </div>
-      {menu}
+      {menu.length >= 1 ? (
+        <>
+          <div>
+            <h3>MENU</h3>
+          </div>
+          <div>{menu}</div>
+        </>
+      ) : (
+        <div>
+          <p>No menu yet</p>
+        </div>
+      )}
     </main>
   );
 };

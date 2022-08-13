@@ -88,7 +88,7 @@ export default function UserRegistration() {
       return;
     }
     try {
-      const response = await axios.post(
+      await axios.post(
         REGISTER_URL,
         JSON.stringify({
           username,
@@ -104,7 +104,7 @@ export default function UserRegistration() {
           withCredentials: true,
         }
       );
-      // console.log(response);
+
       setSuccess(true);
       // clear input fields set states back to empty strings
     } catch (err) {

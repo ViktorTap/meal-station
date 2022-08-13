@@ -6,5 +6,6 @@ router.post("/:id/menu/create", dishController.createNewDish);
 // router.get("/all", registerController.getAllRestaurants);
 router.get("/:id/menu/:id", dishController.getDish);
 router.get("/:id/menu", dishController.getAllByRestaurantId);
+router.delete("/menu/:id/delete", dishController.deleteDish);
 
 module.exports = router;

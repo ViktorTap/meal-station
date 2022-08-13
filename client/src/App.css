@@ -133,14 +133,34 @@ p {
 .restaurant-card--main > img {
   object-fit: cover;
   width: 200px;
-  /* height: 200px; */
+  max-height: 100px;
   overflow: hidden;
   border-radius: 15px;
   margin-bottom: 5px;
 }
 
+.restaurant-card--categories {
+  border: 1px solid black;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 25%;
+  border-radius: 15px;
+}
+
+.restaurant-card--categories > p {
+  margin: 1px;
+}
+
 .restaurant-card--description {
   font-style: italic;
+  margin-bottom: 5px;
+}
+
+.restaurant-card--price-class {
+  margin-bottom: 15px;
 }
 /* RESTAURANTS ENDS */
 /* RESTAURANT PROFILE STARTS */
@@ -191,6 +211,26 @@ p {
 h4 {
   margin: 3px 0 3px 0;
 }
+
+.restaurant-profile--order-history-main {
+  border: 2px solid black;
+  height: 350px;
+  overflow-y: scroll;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.RestaurantOrderHistory--main {
+  border-radius: 15px;
+  border: 1px solid #34571a;
+  box-shadow: 1.5px 3px;
+  width: 75%;
+  margin-bottom: 15px;
+  padding-left: 10px;
+  background-color: #fffcf4;
+}
 /* RESTAURANT PROFILE ENDS */
 /* MENU STARTS */
 
@@ -226,6 +266,7 @@ h4 {
   cursor: pointer;
   box-shadow: 1.5px 3px;
   background-color: #fff;
+  margin-bottom: 10px;
 }
 
 .dish-card--info-container {
@@ -436,9 +477,10 @@ h4 {
 }
 
 .dishProfile--main {
-  width: 25%;
+  width: 30%;
   height: 65%;
   display: flex;
+  padding: 0 5px 0 5px;
   flex-direction: column;
   align-items: center;
   margin-bottom: 15px;
@@ -470,6 +512,20 @@ h4 {
   font-size: large;
 }
 
+.addButton:hover {
+  background-color: green;
+}
+
+.deleteButton {
+  width: 40px;
+  height: 40px;
+  font-size: large;
+}
+
+.deleteButton:hover {
+  background-color: red;
+}
+
 .dishProfile-buttons--buttons {
   width: 40px;
   height: 40px;
@@ -477,3 +533,120 @@ h4 {
 }
 
 /* DISH PROFILE ENDS*/
+/* CREATE NEW DISH STARTS*/
+.create-new-dish--main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 15px;
+  height: 500px;
+}
+
+.create-new-dish--form {
+  margin: 15px;
+  height: 70%;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px;
+  border: 1px solid #34571a;
+  border-radius: 15px;
+}
+.create-new-dish--form > label {
+  margin: 5px;
+}
+
+.create-new-dish--form > input,
+textarea {
+  margin: 0px 5px 0px 5px;
+}
+
+/* CREATE NEW DISH ENDS*/
+/* CART STARTS */
+
+.cart--main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 1210px;
+  height: 720px;
+  margin: auto;
+}
+
+.cart-section--container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 15px;
+  /*justify-content: center;*/
+  align-items: center;
+  width: 610px;
+  border-radius: 15px;
+  border: 1px solid #34571a;
+  box-shadow: 1.5px 3px;
+
+  height: 655px;
+  overflow: auto;
+}
+
+.cart-section--order-price {
+  display: flex;
+  width: 610px;
+  height: 65px;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 15px 0 15px 0;
+  align-items: center;
+  background-color: #fffcf4;
+  border: 1px solid #34571a;
+  box-shadow: 1.5px 3px;
+  border-radius: 15px;
+}
+
+.cart-section--order-price > button {
+  width: 180px;
+  height: 40px;
+  font-size: large;
+  font-weight: bold;
+  border-radius: 15px;
+}
+
+.cart-section--order-price > button:hover {
+  background-color: green;
+  cursor: pointer;
+}
+
+/* CART ENDS*/
+/* CART CARD STARTS */
+/* .cart-card--main {
+  display: flex;
+  flex-direction: column;
+  
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+} */
+
+.cart-card--main-container {
+  background-color: #fffcf4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 270px;
+  width: 450px;
+  border: 1px solid #34571a;
+  box-shadow: 1.5px 3px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.cart-card--main-container > h3 {
+  margin: 5px 0 5px 0;
+}
+
+/* CART CARD ENDS */

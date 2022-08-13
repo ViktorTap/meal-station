@@ -51,4 +51,19 @@ const getDish = async (req, res) => {
   res.json(dish);
 };
 
-module.exports = { createNewDish, getAllByRestaurantId, getDish };
+// DELETE BY ID
+const deleteDish = async (req, res) => {
+  if (!req?.params?.id)
+    return res.status(400).json({ message: "Dish ID required" });
+
+  try {
+    const deleted = await Dish.findByIdAndDelete({ _id: req.params.id });
+    console.log(deleted);
+  } catch (error) {
+    console.log(error);
+  }
+
+  res.status(201).json({ message: "Deleted" });
+};
+
+module.exports = { createNewDish, getAllByRestaurantId, getDish, deleteDish };

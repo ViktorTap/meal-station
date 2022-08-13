@@ -32,6 +32,7 @@ function App() {
   const [restaurantName, setRestaurantName] = useState("");
   const [restaurantOwnerId, setRestaurantOwnerId] = useState("");
   const [profileRestaurants, setProfileRestaurants] = useState("");
+  const [restaurantData, setRestaurantData] = useState("");
   const [menu, setMenu] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [refreshPage, setRefreshPage] = useState(false);
@@ -78,6 +79,7 @@ function App() {
               setRestaurantOwnerId={setRestaurantOwnerId}
               quantity={quantity}
               setQuantity={setQuantity}
+              setRestaurantData={setRestaurantData}
             />
           }
         />
@@ -121,6 +123,7 @@ function App() {
               cartItems={cartItems}
               setCartItems={setCartItems}
               restaurantName={restaurantName}
+              restaurantData={restaurantData}
             />
           }
         />

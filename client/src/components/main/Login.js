@@ -46,6 +46,7 @@ export default function Login() {
       const lastname = response?.data.foundResult.lastname;
       const address = response?.data.foundResult.address;
       const orders = response?.data.foundResult.orders;
+      const phoneNumber = response?.data.foundResult.phoneNumber;
 
       setAuth({
         id,
@@ -57,6 +58,7 @@ export default function Login() {
         lastname,
         address,
         orders,
+        phoneNumber,
       });
       // saved in global context
       setUser("");

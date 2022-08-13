@@ -14,17 +14,13 @@ const RestaurantCard = ({ restaurant }) => {
       {/* </Link> */}
       <img src={restaurant.restaurantPicture} alt="restaurant" />
       <p className="restaurant-card--description">{restaurant.description}</p>
-      <p>
-        {restaurant.category[0] ? restaurant.category[0] : ""}
-        <br />
-        {restaurant.category[1] ? restaurant.category[1] : ""}
-        <br />
-        {restaurant.category[2] ? restaurant.category[2] : ""}
-        <br />
-        <p>{restaurant._id}</p>
-      </p>
+      <div className="restaurant-card--categories">
+        <p>{restaurant.category[0] ? restaurant.category[0] : ""}</p>
+        <p>{restaurant.category[1] ? restaurant.category[1] : ""}</p>
+        <p>{restaurant.category[2] ? restaurant.category[2] : ""}</p>
+      </div>
       <p className="restaurant-card--price-class">
-        Price: {"$".repeat(restaurant.priceClass)}
+        Price class: {"$".repeat(restaurant.priceClass)}
       </p>
     </div>
   );

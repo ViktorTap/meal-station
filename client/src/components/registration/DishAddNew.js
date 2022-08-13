@@ -77,10 +77,10 @@ const DishAddNew = ({ restaurantName }) => {
           </p>
         </section>
       ) : (
-        <main>
+        <main className="create-new-dish--main">
           <h1>Create new dish for your restaurant {restaurantName}</h1>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Name:</label>
+          <form className="create-new-dish--form" onSubmit={handleSubmit}>
+            <label htmlFor="name">Name: </label>
             <input
               type="text"
               id="name"
@@ -91,43 +91,65 @@ const DishAddNew = ({ restaurantName }) => {
               onChange={handleChange}
               required
             />
-            <br />
+
             <label htmlFor="description">Description:</label>
+
             <textarea
               type="text"
               id="description"
               name="description"
               value={dish.description}
-              ref={dishRef}
               onChange={handleChange}
-              required
               placeholder="Tell about this delicious dish"
             />
-            <br />
-            <label htmlFor="price">Price:</label>
+
+            <label htmlFor="price">Price: </label>
             <input
               type="text"
               id="price"
               name="price"
               value={dish.price}
-              ref={dishRef}
               onChange={handleChange}
               required
               placeholder="Example: 19.95"
             />
-            <label htmlFor="dishPicture">Picture:</label>
-            <span>optional</span>
+
+            <label htmlFor="dishPicture">
+              <span
+                style={{
+                  fontStyle: "italic",
+                  fontSize: "10px",
+                  marginRight: "3px",
+                }}
+              >
+                optional
+              </span>
+              Picture:
+            </label>
+
             <input
               type="text"
               id="dishPicture"
               name="dishPicture"
               value={dish.dishPicture}
-              ref={dishRef}
               onChange={handleChange}
               placeholder="https://your-dish-image.com"
             />
-            <br />
-            <button>{`Add ${dish.name} to ${restaurantName} menu!`}</button>
+
+            <button
+              type="submit"
+              style={{
+                margin: "10px 3px 10px 3px",
+              }}
+            >{`Add ${dish.name} to ${restaurantName} menu!`}</button>
+            <button
+              onClick={() => navigate(-1)}
+              style={{
+                margin: "0 3px 0 3px",
+              }}
+            >
+              CANCEL
+            </button>
           </form>
         </main>
       )}

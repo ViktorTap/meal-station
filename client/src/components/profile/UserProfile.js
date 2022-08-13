@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthProvider";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import OrderCard from "../main/Card/OrderCard";
 
@@ -14,10 +14,9 @@ const UserProfile = ({
   setCartItems,
 }) => {
   const navigate = useNavigate();
-  const { remove } = useContext(AuthContext);
+  const { auth, setAuth, remove } = useContext(AuthContext);
 
   const [ordersHistory, setOrdersHistory] = useState([]);
-  const [wholeOrders, setWholeOrders] = useState("");
 
   const user = useAuth();
   const GET_RESTAURANTS_BY_OWNER_ID = `/profile/${user.auth.id}/restaurants`;
@@ -61,7 +60,13 @@ const UserProfile = ({
         }
 
         const ordersReadyForCard = orderArr.reverse().map((order) => {
-          return <OrderCard order={order} items={orderObjectArr} />;
+          return (
+            <OrderCard
+              key={orderObjectArr.id}
+              order={order}
+              items={orderObjectArr}
+            />
+          );
         });
 
         setOrdersHistory(ordersReadyForCard);
@@ -102,6 +107,15 @@ const UserProfile = ({
 
   const [active, setActive] = useState(false);
 
+  // UPDATING USER
+  const [updateActive, setUpdateActive] = useState(false);
+  const [updateProfile, setUpdateProfile] = useState({
+    firstname: user.auth.firstname,
+    lastname: user.auth.lastname,
+    address: user.auth.address,
+    phoneNumber: user.auth.phoneNumber ? user.auth.phoneNumber : "",
+  });
+
   const handleClick = () => {
     navigate("/restaurant/register-restaurant");
   };
@@ -123,6 +137,58 @@ const UserProfile = ({
     boxShadow: "0px 0.5px",
   };
 
+  const handleInfoChange = (event) => {
+    const { name, value } = event.target;
+
+    setUpdateProfile((prevProfile) => {
+      return {
+        ...prevProfile,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleInfoUpdate = async (event) => {
+    event.preventDefault();
+
+    const firstname = updateProfile.firstname;
+    const lastname = updateProfile.lastname;
+    const address = updateProfile.address;
+    const phoneNumber = updateProfile.phoneNumber
+      ? updateProfile.phoneNumber
+      : "";
+
+    try {
+      const response = await axios.patch(
+        `/profile/${user.auth.id}`,
+        JSON.stringify({
+          firstname,
+          lastname,
+          address,
+          phoneNumber,
+        }),
+
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setAuth({
+        ...auth,
+        firstname: firstname,
+        lastname: lastname,
+        address: address,
+        phoneNumber: phoneNumber,
+      });
+
+      setUpdateActive(false);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getOwnersRestaurants();
     getAllUserInfo();
@@ -132,19 +198,71 @@ const UserProfile = ({
   return (
     <main className="profile--main">
       <section className="profile--container">
-        <div className="profile--info">
-          <h4>PROFILE</h4>
+        {updateActive ? (
+          <div className="profile--info">
+            <form onSubmit={handleInfoUpdate}>
+              <label htmlFor="firstname">Firstname: </label>
+              <input
+                type="text"
+                id="firstname"
+                name="firstname"
+                autoComplete="off"
+                required
+                value={updateProfile.firstname}
+                onChange={handleInfoChange}
+              />
+              <label htmlFor="lastname">Lastname: </label>
+              <input
+                type="text"
+                id="lastname"
+                name="lastname"
+                required
+                value={updateProfile.lastname}
+                onChange={handleInfoChange}
+              />
+              <label htmlFor="address">Address: </label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                required
+                value={updateProfile.address}
+                onChange={handleInfoChange}
+              />
+              {user.auth.phoneNumber && (
+                <>
+                  <label htmlFor="phoneNumber">Phone: </label>
+                  <input
+                    type="text"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    required
+                    value={updateProfile.phoneNumber}
+                    onChange={handleInfoChange}
+                  />
+                </>
+              )}
+              <button>SUBMIT</button>
+            </form>
+            <button onClick={() => setUpdateActive(false)}>CANCEL</button>
+          </div>
+        ) : (
+          <div className="profile--info">
+            <h4>PROFILE</h4>
+            <p>Username: {user.auth.user}</p>
+            <p>Firstname: {user.auth.firstname}</p>
+            <p>Lastname: {user.auth.lastname}</p>
+            <p>Address: {user.auth.address}</p>
+            {user.auth.phoneNumber && <p>Phone: {user.auth.phoneNumber}</p>}
+            <p>{`${
+              user.auth.roles[0] === 1984
+                ? "You have owner's rights"
+                : "You have user's rights"
+            }`}</p>
+            <button onClick={() => setUpdateActive(true)}>UPDATE</button>
+          </div>
+        )}
 
-          <p>username: {user.auth.user}</p>
-          <p>firstname: {user.auth.firstname}</p>
-          <p>lastname: {user.auth.lastname}</p>
-          <p>address: {user.auth.address}</p>
-          <p>{`${
-            user.auth.roles[0] === 1984
-              ? "You have owner's rights"
-              : "You have user's rights"
-          }`}</p>
-        </div>
         <div className="profile--buttons">
           <button onClick={logout}>LOGOUT</button>
           <div

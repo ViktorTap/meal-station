@@ -23,7 +23,6 @@ const Cart = ({ cartItems, setCartItems }) => {
   const today = format(new Date(), "dd.MM.yyyy HH:mm:ss");
 
   const restaurantIndex = cartItems[0]?.restaurantId;
-  console.log(restaurantIndex);
 
   const handleSubmitCart = async (event) => {
     event.preventDefault();
@@ -46,7 +45,7 @@ const Cart = ({ cartItems, setCartItems }) => {
         withCredentials: true,
       }
     );
-
+    console.log(response);
     const restaurantResponse = await axios.put(
       `restaurant/${restaurantIndex}/add-order`,
       JSON.stringify({
@@ -64,10 +63,7 @@ const Cart = ({ cartItems, setCartItems }) => {
         withCredentials: true,
       }
     );
-
     console.log(restaurantResponse);
-    console.log(response);
-
     setSuccess(true);
     setSessionCart([]);
     setCartItems([]);
@@ -82,7 +78,15 @@ const Cart = ({ cartItems, setCartItems }) => {
 
   return (
     <>
-      <main>
+      <h1
+        style={{
+          textAlign: "center",
+          margin: "5px 0 15px 0",
+        }}
+      >
+        CART
+      </h1>
+      <main className="cart--main">
         {success ? (
           <section>
             <p>Thank You for purchase</p>
@@ -91,23 +95,28 @@ const Cart = ({ cartItems, setCartItems }) => {
             </Link>
           </section>
         ) : (
-          <section>
-            Cart
-            <br />
-            {user.auth.user
-              ? sessionCart.length > 0
-                ? sessionCart
-                : "cart is empty"
-              : "cart is empty"}
-            <br />
+          <section className="cart-section--container">
+            <div className="cart-card--main">
+              {user.auth.user
+                ? sessionCart.length > 0
+                  ? sessionCart
+                  : "cart is empty"
+                : "cart is empty"}
+            </div>
+          </section>
+        )}
+        {!success && sessionCart.length >= 1 ? (
+          <div className="cart-section--order-price">
             <button
               onClick={handleSubmitCart}
               disabled={!sessionCart.length >= 1}
             >
-              Order
+              ORDER
             </button>
-            {sessionTotalPrice}
-          </section>
+            <h2>TOTAL : {sessionTotalPrice} €</h2>
+          </div>
+        ) : (
+          ""
         )}
       </main>
     </>

@@ -19,6 +19,7 @@ export default function RestaurantProfile({
   setQuantity,
   order,
   setOrder,
+  setRestaurantData,
 }) {
   const { id } = useParams();
   const API_URL_BY_ID = `/restaurant/${id}`;
@@ -31,10 +32,11 @@ export default function RestaurantProfile({
     try {
       const response = await axios.get(API_URL_BY_ID);
       const restaurant = response.data;
-
+      console.log(restaurant);
+      setRestaurantData(restaurant);
       const RestaurantById = () => {
         return (
-          <div key={restaurant.id} className="restaurant-profile--main">
+          <div key={restaurant._id} className="restaurant-profile--main">
             <h1>{restaurant.name}</h1>
 
             <img src={restaurant.restaurantPicture} alt="restaurant" />
@@ -48,6 +50,18 @@ export default function RestaurantProfile({
               <p>{restaurant.category[2] ? restaurant.category[2] : ""} </p>
             </div>
             <p>We are open: {restaurant.openHours}</p>
+            {user.auth.user && userId === restaurantOwnerId ? (
+              <Link
+                to={`/restaurant/${id}/menu/create`}
+                style={{
+                  textDecoration: "none",
+                  color: "green",
+                  fontWeight: "bolder",
+                }}
+              >{`Create new dish for ${restaurantName}`}</Link>
+            ) : (
+              ""
+            )}
           </div>
         );
       };
@@ -118,16 +132,7 @@ export default function RestaurantProfile({
           setOrder={setOrder}
         />
 
-        <div>
-          {restaurantProfile}
-          {user.auth.user && userId === restaurantOwnerId ? (
-            <Link
-              to={`/restaurant/${id}/menu/create`}
-            >{`Create new dish for ${restaurantName}`}</Link>
-          ) : (
-            ""
-          )}
-        </div>
+        <div>{restaurantProfile}</div>
       </section>
       {user.auth.user && userId === restaurantOwnerId ? (
         <section className="restaurant-profile--order-history-main">

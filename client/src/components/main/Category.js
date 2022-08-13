@@ -17,6 +17,7 @@ export default function Category({ setRestaurants }) {
 
   const categories = [
     {
+      id: 1,
       cover:
         "https://images.unsplash.com/photo-1561395049-69684aacf8de?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
       name: "Cafe",
@@ -24,6 +25,7 @@ export default function Category({ setRestaurants }) {
       searchName: "cafe",
     },
     {
+      id: 2,
       cover:
         "https://images.unsplash.com/photo-1571066811602-716837d681de?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=536&q=80",
       name: "Pizzeria",
@@ -31,6 +33,7 @@ export default function Category({ setRestaurants }) {
       searchName: "pizzeria",
     },
     {
+      id: 3,
       cover:
         "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1630&q=80",
       name: "Burgers",
@@ -38,6 +41,7 @@ export default function Category({ setRestaurants }) {
       searchName: "burgers",
     },
     {
+      id: 4,
       cover:
         "https://images.unsplash.com/photo-1623073284788-0d846f75e329?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
       name: "Fine Dining",
@@ -45,6 +49,7 @@ export default function Category({ setRestaurants }) {
       searchName: "fine-dining",
     },
     {
+      id: 5,
       cover:
         "https://images.unsplash.com/photo-1576379392044-6d933410d374?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
       name: "Fast Food",
@@ -52,6 +57,7 @@ export default function Category({ setRestaurants }) {
       searchName: "fast-food",
     },
     {
+      id: 6,
       cover:
         "https://images.unsplash.com/photo-1602097944182-c43423a8056d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80",
       name: "Family Style",
@@ -59,6 +65,7 @@ export default function Category({ setRestaurants }) {
       searchName: "family-style",
     },
     {
+      id: 7,
       cover:
         "https://images.unsplash.com/photo-1512003867696-6d5ce6835040?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
       name: "Asian",
@@ -66,6 +73,7 @@ export default function Category({ setRestaurants }) {
       searchName: "asian",
     },
     {
+      id: 8,
       cover:
         "https://images.unsplash.com/photo-1523986371872-9d3ba2e2a389?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1738&q=80",
       name: "Mediterranean",
@@ -73,6 +81,7 @@ export default function Category({ setRestaurants }) {
       searchName: "mediterranean",
     },
     {
+      id: 9,
       cover:
         "https://images.unsplash.com/photo-1603532648955-039310d9ed75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
       name: "Pastries",
@@ -107,6 +116,7 @@ export default function Category({ setRestaurants }) {
   const category = categories.map((item) => {
     return (
       <div
+        key={item.id}
         className="category--main-div"
         onClick={() => getAllByCategory(item.searchName)}
       >

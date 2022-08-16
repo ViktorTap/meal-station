@@ -149,7 +149,7 @@ export default function UserRegistration() {
             <Link to="/register-owner">Register as a owner.</Link>
             <h1>Account Registration</h1>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="user-registration--form">
               <label htmlFor="username">
                 Username:
                 <span
@@ -171,6 +171,7 @@ export default function UserRegistration() {
                   <FontAwesomeIcon icon={faTimes} />
                 </span>
               </label>
+
               <input
                 type="text"
                 id="username"
@@ -199,7 +200,7 @@ export default function UserRegistration() {
                 <br />
                 Letters, numbers, underscores, hyphens allowed.
               </p>
-              <br />
+
               <label htmlFor="firstname">Firstname:</label>
               <input
                 type="text"
@@ -211,7 +212,7 @@ export default function UserRegistration() {
                 onFocus={() => setUserFocus(true)}
                 onBlur={() => setUserFocus(false)}
               />
-              <br />
+
               <label htmlFor="lastname">Lastname:</label>
               <input
                 type="text"
@@ -222,7 +223,6 @@ export default function UserRegistration() {
                 onFocus={() => setUserFocus(true)}
                 onBlur={() => setUserFocus(false)}
               />
-              <br />
 
               <label htmlFor="address">Address:</label>
               <input
@@ -235,7 +235,7 @@ export default function UserRegistration() {
                 onFocus={() => setUserFocus(true)}
                 onBlur={() => setUserFocus(false)}
               />
-              <br />
+
               <label htmlFor="password">
                 Password:
                 <span
@@ -289,7 +289,7 @@ export default function UserRegistration() {
                 <span aria-label="dollar sign">$</span>
                 <span aria-label="percent">%</span>
               </p>
-              <br />
+
               <label htmlFor="confirm_pwd">
                 Confirm Password:
                 <span
@@ -311,6 +311,7 @@ export default function UserRegistration() {
                   <FontAwesomeIcon icon={faTimes} />
                 </span>
               </label>
+
               <input
                 type="password"
                 id="confirm_pwd"
@@ -332,7 +333,7 @@ export default function UserRegistration() {
                 <FontAwesomeIcon icon={faInfoCircle} />
                 Must match the first password input field.
               </p>
-              <br />
+
               <button
                 disabled={
                   !validName || !validPassword || !validMatch ? true : false

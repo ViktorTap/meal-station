@@ -142,10 +142,10 @@ export default function UserRegistration() {
           </p>
 
           <div className="user-registration--main">
-            <p>Want to be just a user? </p>
+            <p>Just want to order meals? </p>
             <Link to="/register-user">Register as a user.</Link>
             <h1>Owner Registration</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="user-registration--form">
               <label htmlFor="username">
                 Username:
                 <span
@@ -276,7 +276,7 @@ export default function UserRegistration() {
               <p
                 id="user-registration--password-note"
                 className={
-                  passwordFocus && !validPassword
+                  passwordFocus && password && !validPassword
                     ? "user-registration--instructions"
                     : "user-registration--offscreen"
                 }

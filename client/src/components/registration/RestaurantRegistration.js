@@ -1,4 +1,3 @@
-import React from "react";
 import { useRef, useState, useEffect } from "react";
 import {
   faCheck,
@@ -7,7 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "../../api/axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const RESTAURANT_REGEX = /^[a-zA-Z][a-zA-Z0-9-_ ]{3,23}$/; //start with a-zA-Z must be followed by next array and must be 3 - 23 char long
@@ -19,6 +18,7 @@ export default function RestaurantRegistration() {
 
   const user = useAuth();
   const id = user.auth.id;
+  const navigate = useNavigate();
 
   const [restaurant, setRestaurant] = useState({
     ownerId: id,
@@ -27,7 +27,7 @@ export default function RestaurantRegistration() {
     address: "",
     category: [],
     phoneNumber: "",
-    priceClass: "",
+    priceClass: 3,
     openHours: "",
     restaurantPicture: "",
   });
@@ -48,21 +48,21 @@ export default function RestaurantRegistration() {
   }, [restaurant]);
 
   useEffect(() => {
-    console.log(restaurant);
+    // console.log(restaurant);
     setErrMsg("");
   }, [restaurant]);
 
   function handleChange(event) {
-    const { name, value, type } = event.target;
+    const { name, value, type, checked } = event.target;
 
     setRestaurant((prevRestaurant) => {
       return {
         ...prevRestaurant,
         [name]: value,
         category:
-          type === "checkbox"
+          type === "checkbox" && checked
             ? [...prevRestaurant.category, value]
-            : [...prevRestaurant.category],
+            : [...prevRestaurant.category.filter((event) => event !== value)],
       };
     });
   }
@@ -120,6 +120,24 @@ export default function RestaurantRegistration() {
     }
   };
 
+  function checkBoxLimit() {
+    const checkBoxGroup = document.forms["restaurant-registration"]["category"];
+    const limit = 3;
+
+    for (let i = 0; i < checkBoxGroup.length; i++) {
+      checkBoxGroup[i].onclick = function () {
+        let checkedCount = 0;
+        for (let i = 0; i < checkBoxGroup.length; i++) {
+          checkedCount += checkBoxGroup[i].checked ? 1 : 0;
+        }
+        if (checkedCount > limit) {
+          alert(`You can select maximum of ${limit} checkboxes.`);
+          this.checked = false;
+        }
+      };
+    }
+  }
+
   return (
     <>
       {success ? (
@@ -149,7 +167,11 @@ export default function RestaurantRegistration() {
 
           <div className="user-registration--main">
             <h1>Restaurant Registration</h1>
-            <form onSubmit={handleSubmit}>
+            <form
+              name="restaurant-registration"
+              onSubmit={handleSubmit}
+              className="restaurant-registration--form"
+            >
               <label htmlFor="name">
                 Name:
                 <span
@@ -200,12 +222,14 @@ export default function RestaurantRegistration() {
                 <br />
                 Letters, numbers, underscores, spaces, hyphens allowed.
               </p>
-              <br />
+
               <label htmlFor="description">Description:</label>
               <textarea
                 type="text"
                 id="description"
                 name="description"
+                rows="5"
+                cols="33"
                 value={restaurant.description}
                 ref={restaurantRef}
                 onChange={handleChange}
@@ -214,7 +238,7 @@ export default function RestaurantRegistration() {
                 onFocus={() => setRestaurantFocus(true)}
                 onBlur={() => setRestaurantFocus(false)}
               />
-              <br />
+
               <label htmlFor="address">Address:</label>
               <input
                 type="text"
@@ -226,124 +250,152 @@ export default function RestaurantRegistration() {
                 onFocus={() => setRestaurantFocus(true)}
                 onBlur={() => setRestaurantFocus(false)}
               />
-              <br />
-              <section className="user-registration--categories">
+
+              <section className="restaurant-registration--categories">
                 <h4>Category</h4>
-                <label htmlFor="cafe">Cafe: </label>
-                <input
-                  type="checkbox"
-                  id="cafe"
-                  name="category"
-                  value="Cafe"
-                  ref={restaurantRef}
-                  onChange={handleChange}
-                  onFocus={() => setRestaurantFocus(true)}
-                  onBlur={() => setRestaurantFocus(false)}
-                />
-                <label htmlFor="pizzeria">Pizzeria: </label>
-                <input
-                  type="checkbox"
-                  id="pizzeria"
-                  name="category"
-                  value="Pizzeria"
-                  ref={restaurantRef}
-                  onChange={handleChange}
-                  onFocus={() => setRestaurantFocus(true)}
-                  onBlur={() => setRestaurantFocus(false)}
-                />
 
-                <label htmlFor="burgers">Burgers: </label>
-                <input
-                  type="checkbox"
-                  id="burgers"
-                  name="category"
-                  value="Burgers"
-                  ref={restaurantRef}
-                  onChange={handleChange}
-                  onFocus={() => setRestaurantFocus(true)}
-                  onBlur={() => setRestaurantFocus(false)}
-                />
-                <label htmlFor="buffet">Buffet: </label>
-                <input
-                  type="checkbox"
-                  id="buffet"
-                  name="category"
-                  value="Buffet"
-                  ref={restaurantRef}
-                  onChange={handleChange}
-                  onFocus={() => setRestaurantFocus(true)}
-                  onBlur={() => setRestaurantFocus(false)}
-                />
-                <label htmlFor="fine-dining">Fine Dining: </label>
-                <input
-                  type="checkbox"
-                  id="fine-dining"
-                  name="category"
-                  value="Fine Dining"
-                  ref={restaurantRef}
-                  onChange={handleChange}
-                  onFocus={() => setRestaurantFocus(true)}
-                  onBlur={() => setRestaurantFocus(false)}
-                />
-                <label htmlFor="fast-food">Fast Food: </label>
-                <input
-                  type="checkbox"
-                  id="fast-food"
-                  name="category"
-                  value="Fast Food"
-                  ref={restaurantRef}
-                  onChange={handleChange}
-                  onFocus={() => setRestaurantFocus(true)}
-                  onBlur={() => setRestaurantFocus(false)}
-                />
-                <label htmlFor="family-style">Family Style: </label>
-                <input
-                  type="checkbox"
-                  id="family-style"
-                  name="category"
-                  value="Family Style"
-                  ref={restaurantRef}
-                  onChange={handleChange}
-                  onFocus={() => setRestaurantFocus(true)}
-                  onBlur={() => setRestaurantFocus(false)}
-                />
-                <label htmlFor="asian">Asian: </label>
-                <input
-                  type="checkbox"
-                  id="asian"
-                  name="category"
-                  value="Asian"
-                  ref={restaurantRef}
-                  onChange={handleChange}
-                  onFocus={() => setRestaurantFocus(true)}
-                  onBlur={() => setRestaurantFocus(false)}
-                />
-
-                <label htmlFor="mediterranean">Mediterranean: </label>
-                <input
-                  type="checkbox"
-                  id="mediterranean"
-                  name="category"
-                  value="Mediterranean"
-                  ref={restaurantRef}
-                  onChange={handleChange}
-                  onFocus={() => setRestaurantFocus(true)}
-                  onBlur={() => setRestaurantFocus(false)}
-                />
-
-                <label htmlFor="pastries">Pastries: </label>
-                <input
-                  type="checkbox"
-                  id="pastries"
-                  name="category"
-                  value="Pastries"
-                  ref={restaurantRef}
-                  onChange={handleChange}
-                  onFocus={() => setRestaurantFocus(true)}
-                  onBlur={() => setRestaurantFocus(false)}
-                />
+                <li>
+                  <label htmlFor="cafe">Cafe </label>
+                  <input
+                    type="checkbox"
+                    id="cafe"
+                    name="category"
+                    value="Cafe"
+                    ref={restaurantRef}
+                    onChange={handleChange}
+                    onClick={checkBoxLimit}
+                    onFocus={() => setRestaurantFocus(true)}
+                    onBlur={() => setRestaurantFocus(false)}
+                  />
+                </li>
+                <li>
+                  <label htmlFor="pizzeria">Pizzeria </label>
+                  <input
+                    type="checkbox"
+                    id="pizzeria"
+                    name="category"
+                    value="Pizzeria"
+                    ref={restaurantRef}
+                    onChange={handleChange}
+                    onClick={checkBoxLimit}
+                    onFocus={() => setRestaurantFocus(true)}
+                    onBlur={() => setRestaurantFocus(false)}
+                  />
+                </li>
+                <li>
+                  <label htmlFor="burgers">Burgers </label>
+                  <input
+                    type="checkbox"
+                    id="burgers"
+                    name="category"
+                    value="Burgers"
+                    ref={restaurantRef}
+                    onChange={handleChange}
+                    onClick={checkBoxLimit}
+                    onFocus={() => setRestaurantFocus(true)}
+                    onBlur={() => setRestaurantFocus(false)}
+                  />
+                </li>
+                <li>
+                  <label htmlFor="buffet">Buffet </label>
+                  <input
+                    type="checkbox"
+                    id="buffet"
+                    name="category"
+                    value="Buffet"
+                    ref={restaurantRef}
+                    onChange={handleChange}
+                    onClick={checkBoxLimit}
+                    onFocus={() => setRestaurantFocus(true)}
+                    onBlur={() => setRestaurantFocus(false)}
+                  />
+                </li>
+                <li>
+                  <label htmlFor="fine-dining">Fine Dining </label>
+                  <input
+                    type="checkbox"
+                    id="fine-dining"
+                    name="category"
+                    value="Fine Dining"
+                    ref={restaurantRef}
+                    onChange={handleChange}
+                    onClick={checkBoxLimit}
+                    onFocus={() => setRestaurantFocus(true)}
+                    onBlur={() => setRestaurantFocus(false)}
+                  />
+                </li>
+                <li>
+                  <label htmlFor="fast-food">Fast Food </label>
+                  <input
+                    type="checkbox"
+                    id="fast-food"
+                    name="category"
+                    value="Fast Food"
+                    ref={restaurantRef}
+                    onChange={handleChange}
+                    onClick={checkBoxLimit}
+                    onFocus={() => setRestaurantFocus(true)}
+                    onBlur={() => setRestaurantFocus(false)}
+                  />
+                </li>
+                <li>
+                  <label htmlFor="family-style">Family Style </label>
+                  <input
+                    type="checkbox"
+                    id="family-style"
+                    name="category"
+                    value="Family Style"
+                    ref={restaurantRef}
+                    onChange={handleChange}
+                    onClick={checkBoxLimit}
+                    onFocus={() => setRestaurantFocus(true)}
+                    onBlur={() => setRestaurantFocus(false)}
+                  />
+                </li>
+                <li>
+                  <label htmlFor="asian">Asian </label>
+                  <input
+                    type="checkbox"
+                    id="asian"
+                    name="category"
+                    value="Asian"
+                    ref={restaurantRef}
+                    onChange={handleChange}
+                    onClick={checkBoxLimit}
+                    onFocus={() => setRestaurantFocus(true)}
+                    onBlur={() => setRestaurantFocus(false)}
+                  />
+                </li>
+                <li>
+                  <label htmlFor="mediterranean">Mediterranean </label>
+                  <input
+                    type="checkbox"
+                    id="mediterranean"
+                    name="category"
+                    value="Mediterranean"
+                    ref={restaurantRef}
+                    onChange={handleChange}
+                    onClick={checkBoxLimit}
+                    onFocus={() => setRestaurantFocus(true)}
+                    onBlur={() => setRestaurantFocus(false)}
+                  />
+                </li>
+                <li>
+                  <label htmlFor="pastries">Pastries </label>
+                  <input
+                    type="checkbox"
+                    id="pastries"
+                    name="category"
+                    value="Pastries"
+                    ref={restaurantRef}
+                    onChange={handleChange}
+                    onClick={checkBoxLimit}
+                    onFocus={() => setRestaurantFocus(true)}
+                    onBlur={() => setRestaurantFocus(false)}
+                  />
+                </li>
               </section>
-              <br />
+
               <label htmlFor="phoneNumber">Phone:</label>
               <input
                 type="text"
@@ -355,22 +407,23 @@ export default function RestaurantRegistration() {
                 onFocus={() => setRestaurantFocus(true)}
                 onBlur={() => setRestaurantFocus(false)}
               />
-              <br />
+
               <label htmlFor="priceClass">Price Class:</label>
-              <input
-                type="range"
-                id="priceClass"
-                min="1"
-                max="5"
-                name="priceClass"
-                onChange={handleChange}
-                value={restaurant.priceClass}
-                required
-                onFocus={() => setRestaurantFocus(true)}
-                onBlur={() => setRestaurantFocus(false)}
-              />
-              {restaurant.priceClass}
-              <br />
+              <div className="restaurant-registration--form-price-div">
+                <input
+                  type="range"
+                  id="priceClass"
+                  min="1"
+                  max="5"
+                  name="priceClass"
+                  onChange={handleChange}
+                  value={restaurant.priceClass}
+                  required
+                  onFocus={() => setRestaurantFocus(true)}
+                  onBlur={() => setRestaurantFocus(false)}
+                />
+                {restaurant.priceClass}
+              </div>
               <label htmlFor="openHours">We are open:</label>
 
               <input
@@ -400,15 +453,17 @@ export default function RestaurantRegistration() {
                 type="text"
                 id="restaurantPicture"
                 name="restaurantPicture"
+                placeholder="optional - please insert full url"
                 onChange={handleChange}
                 value={restaurant.restaurantPicture}
                 onFocus={() => setRestaurantFocus(true)}
                 onBlur={() => setRestaurantFocus(false)}
               />
-              <br />
+
               <button
                 disabled={!validName ? true : false}
               >{`Register ${restaurant.name} as a new one`}</button>
+              <button onClick={() => navigate(-1)}>Go Back</button>
             </form>
           </div>
         </section>

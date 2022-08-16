@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import Menu from "../main/Menu";
@@ -10,8 +10,6 @@ export default function RestaurantProfile({
   setRestaurantProfile,
   restaurantName,
   setRestaurantName,
-  restaurantOwnerId,
-  setRestaurantOwnerId,
   menu,
   setMenu,
   setCart,
@@ -19,12 +17,14 @@ export default function RestaurantProfile({
   setQuantity,
   order,
   setOrder,
+  restaurantData,
   setRestaurantData,
 }) {
   const { id } = useParams();
   const API_URL_BY_ID = `/restaurant/${id}`;
   const user = useAuth();
   const userId = user.auth.id;
+  const navigate = useNavigate();
 
   const [orderHistory, setOrderHistory] = useState([]);
 
@@ -32,8 +32,8 @@ export default function RestaurantProfile({
     try {
       const response = await axios.get(API_URL_BY_ID);
       const restaurant = response.data;
-      console.log(restaurant);
       setRestaurantData(restaurant);
+
       const RestaurantById = () => {
         return (
           <div key={restaurant._id} className="restaurant-profile--main">
@@ -43,6 +43,7 @@ export default function RestaurantProfile({
             <h4 style={{ fontStyle: "italic" }}>"{restaurant.description}"</h4>
             <p>Come visit us: {restaurant.address}</p>
             <p>Price class: {"$".repeat(restaurant.priceClass)}</p>
+            <p>{restaurant.phoneNumber}</p>
             <div className="restaurant-profile--category-container">
               <h4>Category: </h4>
               <p>{restaurant.category[0]} </p>
@@ -50,15 +51,19 @@ export default function RestaurantProfile({
               <p>{restaurant.category[2] ? restaurant.category[2] : ""} </p>
             </div>
             <p>We are open: {restaurant.openHours}</p>
-            {user.auth.user && userId === restaurantOwnerId ? (
-              <Link
-                to={`/restaurant/${id}/menu/create`}
+
+            {restaurant.ownerId && userId && userId === restaurant.ownerId ? (
+              <button
+                onClick={() => navigate(`/restaurant/${id}/menu/create`)}
                 style={{
                   textDecoration: "none",
                   color: "green",
                   fontWeight: "bolder",
+                  margin: "15px 0 15px 0",
                 }}
-              >{`Create new dish for ${restaurantName}`}</Link>
+              >
+                {`Create new dish for ${restaurantName}`}
+              </button>
             ) : (
               ""
             )}
@@ -103,7 +108,6 @@ export default function RestaurantProfile({
 
       getOrdersFromRestaurant();
 
-      setRestaurantOwnerId(restaurant.ownerId);
       setRestaurantName(restaurant.name);
       setRestaurantProfile(RestaurantById);
     } catch (err) {
@@ -114,8 +118,9 @@ export default function RestaurantProfile({
   useEffect(() => {
     getRestaurantById();
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [restaurantName]);
 
   return (
     <main>
@@ -134,7 +139,7 @@ export default function RestaurantProfile({
 
         <div>{restaurantProfile}</div>
       </section>
-      {user.auth.user && userId === restaurantOwnerId ? (
+      {restaurantData.ownerId && userId && userId === restaurantData.ownerId ? (
         <section className="restaurant-profile--order-history-main">
           <h1>RESTAURANT ORDER HISTORY</h1>
           {orderHistory}

@@ -30,7 +30,6 @@ function App() {
   const [restaurants, setRestaurants] = useState([]);
   const [restaurantProfile, setRestaurantProfile] = useState("");
   const [restaurantName, setRestaurantName] = useState("");
-  const [restaurantOwnerId, setRestaurantOwnerId] = useState("");
   const [profileRestaurants, setProfileRestaurants] = useState("");
   const [restaurantData, setRestaurantData] = useState("");
   const [menu, setMenu] = useState("");
@@ -75,10 +74,9 @@ function App() {
               setRestaurantProfile={setRestaurantProfile}
               restaurantName={restaurantName}
               setRestaurantName={setRestaurantName}
-              restaurantOwnerId={restaurantOwnerId}
-              setRestaurantOwnerId={setRestaurantOwnerId}
               quantity={quantity}
               setQuantity={setQuantity}
+              restaurantData={restaurantData}
               setRestaurantData={setRestaurantData}
             />
           }

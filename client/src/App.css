@@ -576,8 +576,19 @@ h4 {
   font-size: large;
 }
 
+.deleteButton-hide {
+  display: none;
+}
+
 .deleteButton:hover {
   background-color: red;
+}
+
+.deleteButton:hover + .deleteButton-hide {
+  position: absolute;
+  left: 50%;
+  display: block;
+  color: red;
 }
 
 .dishProfile-buttons--buttons {
@@ -697,6 +708,23 @@ textarea {
   box-shadow: 1.5px 3px;
   border-radius: 15px;
   margin-bottom: 15px;
+}
+
+.cart-card--main-container:hover {
+  background-color: lightgreen;
+  transform: scale(1.05);
+}
+
+.cart-card--main-container > img:active {
+  transform: rotate(1turn);
+  transition-duration: 0.5s;
+}
+
+.cart-card--delete-item {
+  position: relative;
+  left: 45%;
+  top: -13%;
+  color: red;
 }
 
 .cart-card--main-container > h3 {

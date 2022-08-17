@@ -1,15 +1,40 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const CartCard = ({ item }) => {
+const CartCard = ({ item, cartItems, setCartItems }) => {
+  const navigate = useNavigate();
+
+  const deleteItemFromCart = (id) => {
+    // console.log("CART ITEMS BEFORE FILTER: ", cartItems);
+    const filteredCart = cartItems.filter((item) => item.id !== id);
+    setCartItems(filteredCart);
+  };
+
   return (
-    <div key={item.id} className="cart-card--main-container">
-      <h4>RESTAURANT NAME: </h4>
+    <main key={item.id} className="cart-card--main-container">
       <h3>{item.restaurantName}</h3>
+
+      <FontAwesomeIcon
+        onClick={() => deleteItemFromCart(item.id)}
+        className="cart-card--delete-item"
+        type="button"
+        icon={faMinusCircle}
+        // style={{
+        //   position: "relative",
+        //   left: "45%",
+        //   top: "-13%",
+        //   color: "red",
+        // }}
+      />
+
       <img
+        onClick={() => navigate(`/restaurant/${item.restaurantId}`)}
         style={{
           height: "100px",
           width: "100px",
           borderRadius: "15px",
+          cursor: "pointer",
         }}
         src={item.dishPicture}
         alt="dish"
@@ -19,15 +44,17 @@ const CartCard = ({ item }) => {
           margin: "10px 0 0 0",
         }}
       >
-        Dish: {item.name}
+        {item.name}
       </p>
+
       <p
         style={{
           margin: "3px 0 3px 0",
         }}
       >
-        Quantity: {item.quantity}
+        {item.quantity}
       </p>
+
       <p
         style={{
           margin: "0px 0 10px 0",
@@ -35,7 +62,7 @@ const CartCard = ({ item }) => {
       >
         {item.price} €
       </p>
-    </div>
+    </main>
   );
 };
 

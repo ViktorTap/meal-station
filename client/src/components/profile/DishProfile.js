@@ -60,8 +60,6 @@ export const DishProfile = ({
       return item;
     });
 
-    console.log(cartItems.length);
-
     if (cartItems.length) {
       const isSameRestaurant = cartItems.some(
         (item) => item.restaurantId === order.restaurantId
@@ -147,23 +145,6 @@ export const DishProfile = ({
       })
       .catch((err) => console.log(err));
 
-    // try {
-    //   const response = await axios.delete(`${API_URL_FOR_DISH}/delete`, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //     withCredentials: true,
-    //   });
-    //   console.log(response);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-
-    // headers: {
-    //   authorization: `Bearer ${token}`,
-    // },
-    // withCredentials: true,
-
     setDeleted(true);
   };
 
@@ -224,12 +205,16 @@ export const DishProfile = ({
               ADD
             </button>
             {user.auth.id === restaurantData.ownerId && (
-              <button className="deleteButton" onClick={handleDishDelete}>
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
+              <div>
+                <button className="deleteButton" onClick={handleDishDelete}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+                <span className="deleteButton-hide">{`DELETE ${order.name}`}</span>
+              </div>
             )}
           </div>
         )}
+
         {user.auth.user && deleted && (
           <div>
             <p>{order.name} is deleted.</p>

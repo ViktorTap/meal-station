@@ -12,7 +12,14 @@ const Cart = ({ cartItems, setCartItems }) => {
   const [sessionTotalPrice, setSessionTotalPrice] = useState(0);
 
   const getAllCartItems = cartItems.map((item) => {
-    return <CartCard item={item} key={item.id} />;
+    return (
+      <CartCard
+        item={item}
+        key={item.id}
+        setCartItems={setCartItems}
+        cartItems={cartItems}
+      />
+    );
   });
 
   let totalSum = 0;

@@ -294,7 +294,9 @@ const UserProfile = ({
         </div>
       </section>
       <section className="profile--my-restaurants">
-        <div>{profileRestaurants}</div>
+        <div className="profile--my-restaurants-cards">
+          {profileRestaurants}
+        </div>
       </section>
     </main>
   );

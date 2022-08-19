@@ -54,7 +54,7 @@ const getDish = async (req, res) => {
 // DELETE BY ID
 const deleteDish = async (req, res) => {
   if (!req?.params?.id)
-    return res.status(400).json({ message: "Dish ID required" });
+    return res.status(400).json({ message: "Dish ID is required" });
 
   try {
     const deleted = await Dish.findByIdAndDelete({ _id: req.params.id });

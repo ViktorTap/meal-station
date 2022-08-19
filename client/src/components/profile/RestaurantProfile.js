@@ -40,7 +40,9 @@ export default function RestaurantProfile({
             <h1>{restaurant.name}</h1>
 
             <img src={restaurant.restaurantPicture} alt="restaurant" />
-            <h4 style={{ fontStyle: "italic" }}>"{restaurant.description}"</h4>
+            <h4 style={{ fontStyle: "italic", textAlign: "center" }}>
+              "{restaurant.description}"
+            </h4>
             <p>Come visit us: {restaurant.address}</p>
             <p>Price class: {"$".repeat(restaurant.priceClass)}</p>
             <p>{restaurant.phoneNumber}</p>
@@ -53,17 +55,28 @@ export default function RestaurantProfile({
             <p>We are open: {restaurant.openHours}</p>
 
             {restaurant.ownerId && userId && userId === restaurant.ownerId ? (
-              <button
-                onClick={() => navigate(`/restaurant/${id}/menu/create`)}
-                style={{
-                  textDecoration: "none",
-                  color: "green",
-                  fontWeight: "bolder",
-                  margin: "15px 0 15px 0",
-                }}
-              >
-                {`Create new dish for ${restaurantName}`}
-              </button>
+              <div className="restaurant-profile--buttons">
+                <button
+                  onClick={() => navigate(`/restaurant/${id}/menu/create`)}
+                  style={{
+                    textDecoration: "none",
+                    color: "green",
+                    fontWeight: "bolder",
+                    margin: "15px 0 15px 0",
+                  }}
+                >
+                  {`Create new dish for ${restaurantName}`}
+                </button>
+                <button
+                  onClick={handleDeleteRestaurant}
+                  style={{
+                    color: "red",
+                    fontWeight: "bolder",
+                  }}
+                >
+                  DELETE RESTAURANT
+                </button>
+              </div>
             ) : (
               ""
             )}
@@ -114,6 +127,30 @@ export default function RestaurantProfile({
       console.error(err);
     }
   }
+
+  const handleDeleteRestaurant = () => {
+    const token = user.auth.accessToken;
+
+    const headers = {
+      Auhorization: `Bearer ${token}`,
+    };
+
+    const data = restaurantData._id;
+
+    if (window.confirm(`Are you sure? Want to delete ${restaurantName}`)) {
+      axios
+        .delete(`restaurant/${restaurantData._id}/delete`, {
+          headers,
+          data,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+
+      navigate("/profile");
+    }
+  };
 
   useEffect(() => {
     getRestaurantById();

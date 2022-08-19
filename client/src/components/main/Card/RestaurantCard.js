@@ -10,7 +10,14 @@ const RestaurantCard = ({ restaurant }) => {
       onClick={() => navigate(`/restaurant/${restaurant._id}`)}
     >
       {/* <Link to={`/restaurant/${restaurant._id}`}> */}
-      <h1>{restaurant.name}</h1>
+      <h1
+        style={{
+          textAlign: "center",
+          lineHeight: "90%",
+        }}
+      >
+        {restaurant.name}
+      </h1>
       {/* </Link> */}
       <img src={restaurant.restaurantPicture} alt="restaurant" />
       <p className="restaurant-card--description">{restaurant.description}</p>

@@ -80,7 +80,9 @@ export default function RestaurantRegistration() {
     const phoneNumber = restaurant.phoneNumber;
     const priceClass = restaurant.priceClass;
     const openHours = restaurant.openHours;
-    const restaurantPicture = restaurant.restaurantPicture;
+    const restaurantPicture = restaurant.restaurantPicture
+      ? restaurant.restaurantPicture
+      : "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1742&q=80";
 
     if (!v1) {
       setErrMsg("Invalid Entry");
@@ -253,7 +255,14 @@ export default function RestaurantRegistration() {
 
               <section className="restaurant-registration--categories">
                 <h4>Category</h4>
-
+                <span
+                  style={{
+                    fontSize: "12px",
+                    fontStyle: "italic",
+                  }}
+                >
+                  Please choose 1 - 3{" "}
+                </span>
                 <li>
                   <label htmlFor="cafe">Cafe </label>
                   <input
@@ -461,7 +470,7 @@ export default function RestaurantRegistration() {
               />
 
               <button
-                disabled={!validName ? true : false}
+                disabled={!validName || restaurant.category.length < 1}
               >{`Register ${restaurant.name} as a new one`}</button>
               <button onClick={() => navigate(-1)}>Go Back</button>
             </form>

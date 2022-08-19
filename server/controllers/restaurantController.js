@@ -116,9 +116,25 @@ const addNewOrder = async (req, res) => {
     );
   }
 };
+
+// DELETE BY ID
+const deleteRestaurant = async (req, res) => {
+  if (!req?.params?.id)
+    return res.status(400).json({ message: "Restaurant ID is required" });
+
+  try {
+    const deleted = await Restaurant.findByIdAndDelete({ _id: req.params.id });
+    console.log(deleted);
+  } catch (error) {
+    console.log(error);
+  }
+
+  res.status(201).json({ message: "Deleted" });
+};
 module.exports = {
   createNewRestaurant,
   getAllRestaurants,
   getRestaurant,
   addNewOrder,
+  deleteRestaurant,
 };

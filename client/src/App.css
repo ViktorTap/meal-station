@@ -98,7 +98,6 @@ p {
 .restaurants--main {
   max-height: 1300px;
   overflow-y: auto;
-
   display: grid;
   justify-content: center;
   column-gap: 15px;
@@ -157,6 +156,7 @@ p {
 .restaurant-card--description {
   font-style: italic;
   margin-bottom: 5px;
+  text-align: center;
 }
 
 .restaurant-card--price-class {
@@ -231,6 +231,12 @@ h4 {
   padding-left: 10px;
   background-color: #fffcf4;
 }
+
+.restaurant-profile--buttons {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
 /* RESTAURANT PROFILE ENDS */
 /* MENU STARTS */
 
@@ -263,7 +269,7 @@ h4 {
   justify-content: space-between;
   align-items: center;
   transition: all 0.4s ease-in-out;
-  cursor: pointer;
+
   box-shadow: 1.5px 3px;
   background-color: #fff;
   margin-bottom: 10px;
@@ -299,7 +305,7 @@ h4 {
 
 .profile--container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 
   margin-bottom: 15px;
 }
@@ -356,13 +362,22 @@ h4 {
 }
 
 .profile--my-restaurants {
-  height: 415px;
   width: 100%;
-  overflow-y: auto;
-  display: grid;
-  justify-content: center;
+  max-height: 1300px;
+  margin-bottom: 15px;
+}
 
-  grid-template-columns: auto auto auto auto auto;
+.profile--my-restaurants-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 280px);
+  grid-template-rows: repeat(3, auto);
+
+  width: 100%;
+  justify-content: center;
+  column-gap: 15px;
+  overflow-y: auto;
+
+  /* DO IT */
 }
 /* PROFILE ENDS */
 /* FOOTER STARTS */
@@ -725,6 +740,12 @@ textarea {
   left: 45%;
   top: -13%;
   color: red;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.cart-card--delete-item:hover {
+  transform: scale(2);
 }
 
 .cart-card--main-container > h3 {

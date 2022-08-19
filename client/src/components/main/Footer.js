@@ -3,7 +3,9 @@ export default function Footer() {
     <footer className="footer--main">
       <p>
         meal station &copy; 2022 || practice project by
-        https://github.com/ViktorTap
+        <a href="https://github.com/ViktorTap" target="_blank" rel="noreferrer">
+          VIKTOR TAP
+        </a>
       </p>
     </footer>
   );
